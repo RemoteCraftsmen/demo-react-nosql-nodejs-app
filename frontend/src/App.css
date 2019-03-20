@@ -1,0 +1,44 @@
+.todo-item{
+  margin-bottom: 20px;
+  display: flex;
+  padding: 25px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.save-todo-item{
+  width: 100px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px !important;
+}
+
+.add-item{
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  min-width: 800px;
+}
+
+a.navigation-link{
+  color: #fff;
+  text-decoration : none;
+}
+
+.notification-success > div{
+  background: #43a047 !important;
+}
+
+.notification-error > div{
+  background: #d32f2f !important;
+}
+
+.notification-info > div{
+  background: #1976d2 !important;
+}
+
+.notification-warning > div{
+  background: #ffa000 !important;
+}

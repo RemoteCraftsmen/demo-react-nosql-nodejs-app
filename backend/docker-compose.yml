@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    couchdb:
+        image: couchdb:latest
+        restart: always
+        volumes:
+            - ~/data/couchdb.react-todo.docker:/usr/local/var/lib/couchdb
+        env_file:
+            - ./docker/couchdb/config.env
+        ports:
+            - 127.0.0.1:5986:5986
+            - 127.0.0.1:5984:5984
+        networks:
+            - global
+
+    redis:
+        image: redis:latest
+        container_name: redis.react-todo.docker
+        networks:
+            - global
+        ports:
+            - 127.0.0.1:6379:6379
+
+networks:
+    global:
+        external: true
