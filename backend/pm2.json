@@ -2,7 +2,7 @@
     "apps" : [
         {
             "name"        : "node-todo-api",
-            "script"      : "./app/index.js",
+            "script"      : "./bin/server.js",
             "watch"       : false,
             "env_production" : {
                 "NODE_ENV": "production",
