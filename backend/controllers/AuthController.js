@@ -11,6 +11,10 @@ class AuthController {
 
         const user = await UserService.register(email, password);
 
+        delete user.password;
+
+        request.session.user = user;
+
         return response.status(HTTP.OK).json(user);
     }
 

@@ -4,11 +4,14 @@ import { SET_USER, LOGOUT_USER } from './types';
 
 export const registerUser = (data, history) => async (dispatch) => {
     try {
-        await axios.post('/api/auth/register', data);
-        
-        history.push('/login');
+        const response = await axios.post('/api/auth/register', data);
+        const user = response.data;
+
+        setUser(user, dispatch);
+
+        history.push('/tasks');
     } catch (error) {
-        console.error(error); 
+        console.error(error);
     }
 };
 
@@ -17,12 +20,7 @@ export const loginUser = (data, history) => async (dispatch) => {
         const response = await axios.post('/api/auth/login', data);
         const user = response.data;
 
-        dispatch({
-            type: SET_USER,
-            payload : user
-        });
-
-        localStorage['user'] = JSON.stringify(user);
+        setUser(user, dispatch);
 
         history.push('/tasks');
     } catch (error) {
@@ -44,4 +42,13 @@ export const logoutUser = (history) => async (dispatch) => {
     } catch (error) {
         console.error(error);
     }
+};
+
+const setUser = (user, dispatch) => {
+    dispatch({
+        type: SET_USER,
+        payload: user,
+    });
+
+    localStorage['user'] = JSON.stringify(user);
 };

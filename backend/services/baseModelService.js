@@ -33,11 +33,13 @@ class BaseModelService {
 
     static async create(data) {
         const result = await couch.insert(this.table, data);
-        const task = await this.findById(result.data.id);
+        const row = await this.findById(result.data.id);
 
-        task.id = task._id;
+        if (row.hasOwnProperty('_id')){
+            row.id = row._id;
+        }
 
-        return task;
+        return row;
     }
 
     static async update(data) {
