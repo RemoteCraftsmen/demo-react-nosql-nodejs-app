@@ -20,7 +20,7 @@ class UserService extends BaseModelService {
     static async login(email, password) {
         const user = await this.findOne({
             email,
-        });
+        }, {sort: [{ created_at: 'desc' }]});
 
         if (!user) {
             return null;

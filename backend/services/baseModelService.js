@@ -14,17 +14,18 @@ class BaseModelService {
     }
 
     static async findOne(where, options = {}) {
-        const { data } = await couch.mango(this.table, { selector: { ...where }, sort: [{ created_at: 'desc' }], ...options});
+        const items = await this.findAll(where, options);
 
-        return data.docs[0];
+        return items[0];
     }
 
     static async findAll(where, options = {}) {
         const result = await couch.mango(this.table, { selector: { ...where }, ...options});
-
         const items = result.data.docs.map((item) => {
             item.id = item._id;
+            
             delete item._id;
+            
             return item;
         });
 

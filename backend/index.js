@@ -24,17 +24,10 @@ const redis = new RedisStore({
 
 redis.client.unref();
 
-app.use(session({
-    store: redis,
-    secret: config.app.secret,
-    resave: false,
-    saveUninitialized: false
-}));
-
 const originsWhitelist = ['http://localhost:8000', config.app.frontendUrl];
 const corsOptions = {
     origin(origin, callback) {
-        if (originsWhitelist.includes(origin) || !origin) {
+        if (originsWhitelist.includes(origin) || origin.includes('//localhost:') || !origin) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
@@ -51,6 +44,19 @@ app.use((err, req, res, next) => {
 
     return res.status(HTTP.OK).json({ code: 200, message: 'Request not allowed by CORS' });
 });
+
+app.use(session({
+    store: redis,
+    secret: config.app.secret,
+    resave: false,
+    saveUninitialized: false,
+    "cookie": {
+      "secure": false,
+      "httpOnly": false,
+      "domain": "localhost"
+    }
+}));
+
 
 require('./appRoutes')(app);
 

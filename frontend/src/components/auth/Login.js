@@ -1,9 +1,28 @@
 import React, { Component } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+
+const styles = (theme) => ({
+    textField: {
+        width: '500px',
+        marginBottom: '20px',
+    },
+    form : {
+        display: 'flex',
+        flexDirection : 'column',
+        justifyContent : 'center',
+        alignItems: 'center',
+        marginTop: '20px'
+    },
+    button : {
+        marginTop : '25px'
+    }
+});
 
 class Login extends Component {
     constructor(props) {
@@ -20,7 +39,7 @@ class Login extends Component {
 
         const data = {
             email,
-            password
+            password,
         };
 
         this.props.loginUser(data, this.props.history);
@@ -31,27 +50,37 @@ class Login extends Component {
     };
 
     render() {
+        const { classes } = this.props;
+
         return (
-            <form noValidate autoComplete="off">
-                <TextField style={{ width: 250 }} label="Email" value={this.state.email} onChange={this.handleChange('email')} margin="dense" />
+            <div>
+                <ValidatorForm ref="form" className={classes.form} onSubmit={this.doLogin} instantValidate={false}>
+                    <Typography variant="display1">Login</Typography>
 
-                <br />
+                    <TextValidator
+                        className={classes.textField} 
+                        label="Email" 
+                        value={this.state.email} 
+                        onChange={this.handleChange('email')}
+                        validators={['required', 'isEmail']}
+                        errorMessages={['Email is required', 'Given email address is not valid']}
+                    />
 
-                <TextField
-                    style={{ width: 250 }}
-                    type="password"
-                    label="Password"
-                    value={this.state.password}
-                    onChange={this.handleChange('password')}
-                    margin="dense"
-                />
-                <br />
-                <br />
+                    <TextValidator
+                        className={classes.textField}
+                        type="password"
+                        label="Password"
+                        value={this.state.password}
+                        onChange={this.handleChange('password')}
+                        validators={['required']}
+                        errorMessages={['Password is required']}
+                    />
 
-                <Button variant="contained" color="secondary" onClick={this.doLogin}>
-                    Login
-                </Button>
-            </form>
+                    <Button variant="contained" color="secondary" onSubmit={this.doLogin} className={classes.button} type="submit">
+                        Login
+                    </Button>
+                </ValidatorForm>
+            </div>
         );
     }
 }
@@ -68,4 +97,4 @@ const mapStateToProps = (state) => ({
 export default connect(
     mapStateToProps,
     { loginUser }
-)(withRouter(Login));
+)(withRouter(withStyles(styles)(Login)));

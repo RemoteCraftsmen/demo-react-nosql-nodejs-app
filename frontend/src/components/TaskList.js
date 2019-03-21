@@ -21,7 +21,7 @@ export default class TaskList extends Component {
         let response;
 
         try {
-            response = await axios.get('/api/tasks');
+            response = await axios.get(process.env.REACT_APP_API_URL + '/api/tasks', {withCredentials: true});
 
             this.setState({
                 tasks: response.data.tasks,
@@ -36,7 +36,7 @@ export default class TaskList extends Component {
         let response;
 
         try {
-            response = await axios.post('/api/tasks', { name });
+            response = await axios.post(process.env.REACT_APP_API_URL + '/api/tasks', { name }, {withCredentials: true});
 
             const task = response.data;
 
@@ -54,7 +54,7 @@ export default class TaskList extends Component {
     };
 
     removeItem = async (id) => {
-        await axios.delete('/api/tasks/' + id);
+        await axios.delete(process.env.REACT_APP_API_URL + '/api/tasks/' + id, {withCredentials: true});
 
         this.setState((state) => {
             const tasks = state.tasks.filter((task) => task.id !== id);

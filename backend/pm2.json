@@ -1,0 +1,13 @@
+{
+    "apps" : [
+        {
+            "name"        : "node-todo-api",
+            "script"      : "./app/index.js",
+            "watch"       : false,
+            "env_production" : {
+                "NODE_ENV": "production",
+                "PORT": "3000"
+            }
+        }
+    ]
+}

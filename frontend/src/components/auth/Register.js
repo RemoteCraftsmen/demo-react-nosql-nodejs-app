@@ -1,9 +1,28 @@
 import React, { Component } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+
+const styles = (theme) => ({
+    textField: {
+        width: '500px',
+        marginBottom: '20px',
+    },
+    form : {
+        display: 'flex',
+        flexDirection : 'column',
+        justifyContent : 'center',
+        alignItems: 'center',
+        marginTop: '20px'
+    },
+    button : {
+        marginTop : '25px'
+    }
+});
 
 class Register extends Component {
     constructor(props) {
@@ -16,7 +35,9 @@ class Register extends Component {
         };
     }
 
-    doRegister = () => {
+    doRegister = (event) => {
+        event.preventDefault();
+
         const data = {
             email: this.state.email,
             password: this.state.password,
@@ -31,37 +52,49 @@ class Register extends Component {
     };
 
     render() {
+        const {classes} = this.props;
+
+        ValidatorForm.addValidationRule('passwordsMustMatch', (value) => value === this.state.password);
+
         return (
-            <form noValidate autoComplete="off">
-                <TextField style={{ width: 250 }} label="Email" value={this.state.email} onChange={this.handleChange('email')} margin="dense" />
+            <div>
+                <ValidatorForm ref="form" className={classes.form} onSubmit={this.doRegister} instantValidate={false}>
+                    <Typography variant="display1">Registration</Typography>
 
-                <br />
+                    <TextValidator
+                        className={classes.textField} 
+                        label="Email" 
+                        value={this.state.email} 
+                        onChange={this.handleChange('email')}
+                        validators={['required', 'isEmail']}
+                        errorMessages={['Email is required', 'Given email address is not valid']}
+                    />
 
-                <TextField
-                    style={{ width: 250 }}
-                    type="password"
-                    label="Password"
-                    value={this.state.password}
-                    onChange={this.handleChange('password')}
-                    margin="dense"
-                />
-                <br />
+                    <TextValidator
+                        className={classes.textField}
+                        type="password"
+                        label="Password"
+                        value={this.state.password}
+                        onChange={this.handleChange('password')}
+                        validators={['required']}
+                        errorMessages={['Password is required']}
+                    />
 
-                <TextField
-                    style={{ width: 250 }}
-                    type="password"
-                    label="Confirm password"
-                    value={this.state.passwordConfirmation}
-                    onChange={this.handleChange('passwordConfirmation')}
-                    margin="dense"
-                />
-                <br />
-                <br />
+                    <TextValidator
+                        className={classes.textField}
+                        type="password"
+                        label="Confirm password"
+                        value={this.state.passwordConfirmation}
+                        onChange={this.handleChange('passwordConfirmation')}
+                        validators={['required', 'passwordsMustMatch']}
+                        errorMessages={['Password confirmation is required', 'Passwords do not match']}
+                    />
 
-                <Button variant="contained" color="secondary" onClick={this.doRegister}>
-                    Register
-                </Button>
-            </form>
+                    <Button variant="contained" color="secondary" onSubmit={this.doRegister} className={classes.button} type="submit">
+                        Register
+                    </Button>
+                </ValidatorForm>
+            </div>
         );
     }
 }
@@ -78,4 +111,4 @@ const mapStateToProps = (state) => ({
 export default connect(
     mapStateToProps,
     { registerUser }
-)(withRouter(Register));
+)(withRouter(withStyles(styles)(Register)));

@@ -37,15 +37,13 @@ class App extends Component {
             <Provider store={store}>
                 <Router>
                     <SiteNavigation />
-                    <Grid container className={classes.root} spacing={8}>
-                        <Grid item xs={12}>
-                            <Grid container justify="center" spacing={Number(spacing)} direction="row" xs={12}>
-                                <Route exact path="/" component={Login} />
-                                <Route exact path="/login" component={Login} />
-                                <Route exact path="/register" component={Register} />
-                                <Route exact path="/logout" component={Logout} />
-                                <Route exact path="/tasks" component={TaskList} />
-                            </Grid>
+                    <Grid container className={classes.root} spacing={8} justify="center">
+                        <Grid item xs={8}>
+                            <Route exact path="/" component={Login} />
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/register" component={Register} />
+                            <Route exact path="/logout" component={Logout} />
+                            <Route exact path="/tasks" component={TaskList} />
                         </Grid>
                     </Grid>
                 </Router>
