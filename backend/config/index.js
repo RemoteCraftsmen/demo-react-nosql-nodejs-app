@@ -14,6 +14,7 @@ const config = {
     db: {
         host: env('COUCHDB_HOST'),
         protocol: env('COUCHDB_PROTOCOL'),
+        port: env('COUCHDB_PORT'),
         auth: {
             user: env('COUCHDB_AUTH_USER'),
             pass: env('COUCHDB_AUTH_PASS'),
