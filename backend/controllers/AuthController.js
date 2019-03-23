@@ -27,10 +27,7 @@ class AuthController {
             return response.sendStatus(HTTP.UNAUTHORIZED);
         }
 
-        request.session.user = {
-            ...user,
-            id: user._id,
-        };
+        request.session.user = user;
 
         return response.status(HTTP.OK).json(user);
     }

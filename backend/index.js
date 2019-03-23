@@ -52,8 +52,7 @@ app.use(session({
     saveUninitialized: false,
     "cookie": {
       "secure": false,
-      "httpOnly": false,
-      "domain": "localhost"
+      "httpOnly": false
     }
 }));
 
