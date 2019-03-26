@@ -37,6 +37,7 @@ class App extends Component {
             <Provider store={store}>
                 <Router>
                     <SiteNavigation />
+                    <div style={{ padding: 4 }}>
                     <Grid container className={classes.root} spacing={8} justify="center">
                         <Grid item xs={8}>
                             <Route exact path="/" component={Login} />
@@ -46,6 +47,7 @@ class App extends Component {
                             <Route exact path="/tasks" component={TaskList} />
                         </Grid>
                     </Grid>
+                    </div>
                 </Router>
             </Provider>
         );
