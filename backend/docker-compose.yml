@@ -3,6 +3,7 @@ version: '3'
 services:
     couchdb:
         image: couchdb:latest
+        container_name: couchdb.react-couchdb-todo.docker
         restart: always
         volumes:
             - ~/data/couchdb.react-todo.docker:/usr/local/var/lib/couchdb
@@ -16,7 +17,7 @@ services:
 
     redis:
         image: redis:latest
-        container_name: redis.react-todo.docker
+        container_name: redis.react-couchdb-todo.docker
         networks:
             - global
         ports:
