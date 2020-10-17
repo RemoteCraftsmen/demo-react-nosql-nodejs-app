@@ -23,7 +23,8 @@ const config = {
     redis: {
         host: env('REDIS_HOST'),
         port: env('REDIS_PORT'),
-        pass: env('REDIS_PASS'),
+        pass: env('REDIS_PASS') || undefined,
+        password: env('REDIS_PASS') || undefined,
         ttl: env('REDIS_TTL'),
     },
 };
