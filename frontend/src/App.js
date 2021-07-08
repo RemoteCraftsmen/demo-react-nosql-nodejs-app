@@ -14,19 +14,19 @@ import css from '../src/App.css';
 
 import store from './store';
 
-const styles = (theme) => ({
+const styles = theme => ({
     root: {
         flexGrow: 1,
-        marginTop: '20px',
+        marginTop: '20px'
     },
     control: {
-        padding: theme.spacing.unit * 2,
-    },
+        padding: theme.spacing.unit * 2
+    }
 });
 
 class App extends Component {
     state = {
-        spacing: '8',
+        spacing: '8'
     };
 
     render() {
@@ -38,15 +38,15 @@ class App extends Component {
                 <Router>
                     <SiteNavigation />
                     <div style={{ padding: 4 }}>
-                    <Grid container className={classes.root} spacing={8} justify="center">
-                        <Grid item xs={8}>
-                            <Route exact path="/" component={Login} />
-                            <Route exact path="/login" component={Login} />
-                            <Route exact path="/register" component={Register} />
-                            <Route exact path="/logout" component={Logout} />
-                            <Route exact path="/tasks" component={TaskList} />
+                        <Grid container className={classes.root} spacing={8} justify="center">
+                            <Grid item xs={8}>
+                                <Route exact path="/" component={Login} />
+                                <Route exact path="/login" component={Login} />
+                                <Route exact path="/register" component={Register} />
+                                <Route exact path="/logout" component={Logout} />
+                                <Route exact path="/tasks" component={TaskList} />
+                            </Grid>
                         </Grid>
-                    </Grid>
                     </div>
                 </Router>
             </Provider>
@@ -55,7 +55,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(App);

@@ -15,33 +15,33 @@ const variantIcon = {
     success: CheckCircleIcon,
     warning: WarningIcon,
     error: ErrorIcon,
-    info: InfoIcon,
+    info: InfoIcon
 };
 
-const styles1 = (theme) => ({
+const styles1 = theme => ({
     success: {
-        backgroundColor: green[600],
+        backgroundColor: green[600]
     },
     error: {
-        backgroundColor: theme.palette.error.dark,
+        backgroundColor: theme.palette.error.dark
     },
     info: {
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: theme.palette.primary.dark
     },
     warning: {
-        backgroundColor: amber[700],
+        backgroundColor: amber[700]
     },
     icon: {
-        fontSize: 20,
+        fontSize: 20
     },
     iconVariant: {
         opacity: 0.9,
-        marginRight: theme.spacing.unit,
+        marginRight: theme.spacing.unit
     },
     message: {
         display: 'flex',
-        alignItems: 'center',
-    },
+        alignItems: 'center'
+    }
 });
 
 function MySnackbarContent(props) {
@@ -65,7 +65,7 @@ function MySnackbarContent(props) {
             action={[
                 <IconButton key="close" aria-label="Close" color="inherit" className={classes.close} onClick={onClose}>
                     <CloseIcon className={classes.icon} />
-                </IconButton>,
+                </IconButton>
             ]}
             {...other}
         />
@@ -77,15 +77,15 @@ MySnackbarContent.propTypes = {
     className: PropTypes.string,
     message: PropTypes.node,
     onClose: PropTypes.func,
-    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
+    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
 };
 
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 
-const styles2 = (theme) => ({
+const styles2 = theme => ({
     margin: {
-        margin: theme.spacing.unit,
-    },
+        margin: theme.spacing.unit
+    }
 });
 
 class Notification extends Component {
@@ -106,7 +106,7 @@ class Notification extends Component {
 }
 
 Notification.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles2)(Notification);

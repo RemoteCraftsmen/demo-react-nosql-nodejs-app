@@ -2,9 +2,11 @@ import axios from 'axios';
 
 import { SET_USER, LOGOUT_USER } from './types';
 
-export const registerUser = (data, history) => async (dispatch) => {
+export const registerUser = (data, history) => async dispatch => {
     try {
-        const response = await axios.post(process.env.REACT_APP_API_URL + '/api/auth/register', data, {withCredentials: true});
+        const response = await axios.post(process.env.REACT_APP_API_URL + '/api/auth/register', data, {
+            withCredentials: true
+        });
         const user = response.data;
 
         setUser(user, dispatch);
@@ -15,9 +17,11 @@ export const registerUser = (data, history) => async (dispatch) => {
     }
 };
 
-export const loginUser = (data, history) => async (dispatch) => {
+export const loginUser = (data, history) => async dispatch => {
     try {
-        const response = await axios.post(process.env.REACT_APP_API_URL + '/api/auth/login', data, {withCredentials: true});
+        const response = await axios.post(process.env.REACT_APP_API_URL + '/api/auth/login', data, {
+            withCredentials: true
+        });
         const user = response.data;
 
         setUser(user, dispatch);
@@ -28,12 +32,12 @@ export const loginUser = (data, history) => async (dispatch) => {
     }
 };
 
-export const logoutUser = (history) => async (dispatch) => {
+export const logoutUser = history => async dispatch => {
     try {
-        await axios.get(process.env.REACT_APP_API_URL + '/api/auth/logout', {withCredentials: true});
+        await axios.get(process.env.REACT_APP_API_URL + '/api/auth/logout', { withCredentials: true });
 
         dispatch({
-            type: LOGOUT_USER,
+            type: LOGOUT_USER
         });
 
         localStorage.removeItem('user');
@@ -47,7 +51,7 @@ export const logoutUser = (history) => async (dispatch) => {
 const setUser = (user, dispatch) => {
     dispatch({
         type: SET_USER,
-        payload: user,
+        payload: user
     });
 
     localStorage['user'] = JSON.stringify(user);

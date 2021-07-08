@@ -45,17 +45,18 @@ app.use((err, req, res, next) => {
     return res.status(HTTP.OK).json({ code: 200, message: 'Request not allowed by CORS' });
 });
 
-app.use(session({
-    store: redis,
-    secret: config.app.secret,
-    resave: false,
-    saveUninitialized: false,
-    "cookie": {
-      "secure": false,
-      "httpOnly": false
-    }
-}));
-
+app.use(
+    session({
+        store: redis,
+        secret: config.app.secret,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: false,
+            httpOnly: false
+        }
+    })
+);
 
 require('./appRoutes')(app);
 

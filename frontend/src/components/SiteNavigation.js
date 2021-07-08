@@ -4,43 +4,42 @@ import { withRouter, Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = (theme) => ({
+const styles = theme => ({
     grow: {
-        flexGrow: 1,
+        flexGrow: 1
     },
     control: {
-        padding: theme.spacing.unit * 2,
-    },
+        padding: theme.spacing.unit * 2
+    }
 });
 
 class SiteNavigation extends Component {
     state = {
-        spacing: '8',
+        spacing: '8'
     };
-
 
     render() {
         const { classes = {} } = this.props;
         const { spacing } = this.state;
-        
+
         return (
             <div>
                 <AppBar position="static">
                     <Toolbar>
                         <Grid container className={classes.grow} spacing={Number(spacing)} justify="center">
                             <Grid item xs={8}>
-                                { this.props.auth.isAuthenticated ? (
-                                    <div style={{ display:'flex' }}>
+                                {this.props.auth.isAuthenticated ? (
+                                    <div style={{ display: 'flex' }}>
                                         <Button>
                                             <Link className="navigation-link" to="/tasks">
                                                 Tasks
                                             </Link>
                                         </Button>
-                                        
+
                                         <div className={classes.grow}></div>
-                                        
+
                                         <Button>
                                             <Link className="navigation-link" to="/logout">
                                                 Logout
@@ -48,13 +47,13 @@ class SiteNavigation extends Component {
                                         </Button>
                                     </div>
                                 ) : (
-                                    <div style={{ display:'flex'}}>
+                                    <div style={{ display: 'flex' }}>
                                         <Button>
                                             <Link className="navigation-link" to="/login">
                                                 Login
                                             </Link>
                                         </Button>
-                                                                                
+
                                         <Button>
                                             <Link className="navigation-link" to="/register">
                                                 Register
@@ -72,14 +71,11 @@ class SiteNavigation extends Component {
 }
 
 SiteNavigation.propTypes = {
-    auth: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-    auth: state.auth,
+const mapStateToProps = state => ({
+    auth: state.auth
 });
 
-export default connect(
-    mapStateToProps,
-    null
-)(withRouter(withStyles(styles)(SiteNavigation)));
+export default connect(mapStateToProps, null)(withRouter(withStyles(styles)(SiteNavigation)));

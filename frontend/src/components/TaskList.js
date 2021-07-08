@@ -13,7 +13,7 @@ export default class TaskList extends Component {
         this.state = {
             isLoggedIn: true,
             tasks: [],
-            notifications: [],
+            notifications: []
         };
     }
 
@@ -21,10 +21,10 @@ export default class TaskList extends Component {
         let response;
 
         try {
-            response = await axios.get(process.env.REACT_APP_API_URL + '/api/tasks', {withCredentials: true});
+            response = await axios.get(process.env.REACT_APP_API_URL + '/api/tasks', { withCredentials: true });
 
             this.setState({
-                tasks: response.data.tasks,
+                tasks: response.data.tasks
             });
         } catch (error) {
             console.error(error);
@@ -32,17 +32,21 @@ export default class TaskList extends Component {
         }
     };
 
-    handleAddItem = async (name) => {
+    handleAddItem = async name => {
         let response;
 
         try {
-            response = await axios.post(process.env.REACT_APP_API_URL + '/api/tasks', { name }, {withCredentials: true});
+            response = await axios.post(
+                process.env.REACT_APP_API_URL + '/api/tasks',
+                { name },
+                { withCredentials: true }
+            );
 
             const task = response.data;
 
-            this.setState((state) => {
+            this.setState(state => {
                 return {
-                    tasks: [...state.tasks, task],
+                    tasks: [...state.tasks, task]
                 };
             });
 
@@ -53,44 +57,51 @@ export default class TaskList extends Component {
         }
     };
 
-    removeItem = async (id) => {
-        await axios.delete(process.env.REACT_APP_API_URL + '/api/tasks/' + id, {withCredentials: true});
+    removeItem = async id => {
+        await axios.delete(process.env.REACT_APP_API_URL + '/api/tasks/' + id, { withCredentials: true });
 
-        this.setState((state) => {
-            const tasks = state.tasks.filter((task) => task.id !== id);
+        this.setState(state => {
+            const tasks = state.tasks.filter(task => task.id !== id);
 
             return {
-                tasks,
+                tasks
             };
         });
 
         this.addNotification('Task removed', 'error');
     };
 
-    closeNotification = async (ts) => {
-        this.setState((state) => {
-            const notifications = state.notifications.filter((task) => task.ts !== ts);
+    closeNotification = async ts => {
+        this.setState(state => {
+            const notifications = state.notifications.filter(task => task.ts !== ts);
 
             return {
-                notifications,
+                notifications
             };
         });
     };
 
     addNotification = async (message = '', variant = 'info') => {
-        this.setState((state) => {
+        this.setState(state => {
             return {
-                notifications: state.notifications.concat({ variant, message, ts: Date.now() }),
+                notifications: state.notifications.concat({ variant, message, ts: Date.now() })
             };
         });
     };
 
     render() {
-        const tasks = this.state.tasks.map((task) => (
-            <Task key={task.id} id={task.id} name={task.name} completed={task.completed} removeItem={this.removeItem} addNotification={this.addNotification} />
+        const tasks = this.state.tasks.map(task => (
+            <Task
+                key={task.id}
+                id={task.id}
+                name={task.name}
+                completed={task.completed}
+                removeItem={this.removeItem}
+                addNotification={this.addNotification}
+            />
         ));
 
-        const notifications = this.state.notifications.map((notification) => (
+        const notifications = this.state.notifications.map(notification => (
             <Notification
                 key={notification.ts}
                 variant={notification.variant}
@@ -104,7 +115,12 @@ export default class TaskList extends Component {
             <div>
                 {this.state.isLoggedIn ? (
                     <div>
-                        <Typography component="h1" variant="h3" gutterBottom style={{ textAlign: 'center', marginTop: '50px', marginBottom: '25px' }}>
+                        <Typography
+                            component="h1"
+                            variant="h3"
+                            gutterBottom
+                            style={{ textAlign: 'center', marginTop: '50px', marginBottom: '25px' }}
+                        >
                             Tasks
                         </Typography>
 
@@ -113,7 +129,12 @@ export default class TaskList extends Component {
                         {tasks.length > 0 ? (
                             tasks
                         ) : (
-                            <Typography component="h2" variant="h4" gutterBottom style={{ textAlign: 'center', marginTop: '50px', marginBottom: '25px' }}>
+                            <Typography
+                                component="h2"
+                                variant="h4"
+                                gutterBottom
+                                style={{ textAlign: 'center', marginTop: '50px', marginBottom: '25px' }}
+                            >
                                 No tasks <br /> Try adding some
                             </Typography>
                         )}

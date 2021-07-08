@@ -34,7 +34,7 @@ class AuthController {
 
     async logout(request, response, next) {
         if (request.session) {
-            request.session.destroy((err) => {
+            request.session.destroy(err => {
                 if (err) {
                     next(err);
                 }

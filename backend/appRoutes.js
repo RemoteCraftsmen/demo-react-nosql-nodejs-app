@@ -6,7 +6,7 @@ function wrapErrorMiddleware(fn) {
         const ret = fn.call(this, err, req, res, next);
 
         if (ret && ret.catch) {
-            ret.catch((innerErr) => next(innerErr));
+            ret.catch(innerErr => next(innerErr));
         }
 
         return ret;
@@ -18,7 +18,7 @@ function wrap(fn) {
         const ret = fn.call(this, req, res, next);
 
         if (ret && ret.catch) {
-            ret.catch((err) => {
+            ret.catch(err => {
                 next(err);
             });
         }
@@ -41,24 +41,24 @@ Object.defineProperty(Layer.prototype, 'handle', {
         }
 
         this.__handle = fn;
-    },
+    }
 });
 
 /* eslint global-require: 0 */
 const routes = {
     auth: require('./routes/auth'),
-    task: require('./routes/task'),
+    task: require('./routes/task')
 };
 
-module.exports = (app) => {
+module.exports = app => {
     app.use('/api', routes.auth);
     app.use('/api', routes.task);
 
     function errorHandler(error, request, response, next) {
         response.status(HTTP.INTERNAL_SERVER_ERROR).json({
             error: {
-                message: error.message,
-            },
+                message: error.message
+            }
         });
 
         return next(error);
