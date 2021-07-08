@@ -1,10 +1,10 @@
 {
-    "apps" : [
+    "apps": [
         {
-            "name"        : "node-todo-api",
-            "script"      : "./bin/server.js",
-            "watch"       : false,
-            "env_production" : {
+            "name": "node-todo-api",
+            "script": "./bin/server.js",
+            "watch": false,
+            "env_production": {
                 "NODE_ENV": "production",
                 "PORT": "3000"
             }

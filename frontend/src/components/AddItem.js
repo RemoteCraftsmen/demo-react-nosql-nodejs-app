@@ -6,13 +6,13 @@ class AddItem extends Component {
         super(props);
 
         this.state = {
-            name: '',
+            name: ''
         };
     }
 
-    handleNameChange = (event) => {
+    handleNameChange = event => {
         this.setState({
-            name: event.target.value,
+            name: event.target.value
         });
     };
 
@@ -38,7 +38,8 @@ class AddItem extends Component {
                         onClick={() => {
                             this.setState({ name: '' });
                             this.props.onClick(this.state.name);
-                        }}>
+                        }}
+                    >
                         Add
                     </Button>
                 </div>

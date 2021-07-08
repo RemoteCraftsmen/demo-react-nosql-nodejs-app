@@ -8,7 +8,7 @@
         "test": "jest --verbose --runInBand --detectOpenHandles",
         "ci": "jest --verbose --runInBand --no-cache",
         "coverage": "jest --verbose --runInBand --no-cache --coverage",
-        "dbsetup" : "node ./db-setup.js"
+        "dbsetup": "node ./db-setup.js"
     },
     "jest": {},
     "license": "MIT",

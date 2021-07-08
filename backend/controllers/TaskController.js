@@ -14,7 +14,7 @@ class TaskController {
         const task = await TaskService.create({
             name,
             user_id: request.session.user.id,
-            created_at: Date.now(),
+            created_at: Date.now()
         });
 
         return response.status(HTTP.CREATED).json(task);
@@ -37,7 +37,7 @@ class TaskController {
         await TaskService.update({
             ...task,
             name,
-            completed,
+            completed
         });
 
         return response.sendStatus(HTTP.OK);

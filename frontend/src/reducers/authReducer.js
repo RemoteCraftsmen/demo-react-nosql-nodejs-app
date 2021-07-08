@@ -4,7 +4,7 @@ const user = JSON.parse(localStorage.getItem('user')) || null;
 
 const initialState = {
     isAuthenticated: !!user,
-    user,
+    user
 };
 
 export default (state = initialState, action) => {
@@ -13,13 +13,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isAuthenticated: !!action.payload,
-                user: action.payload,
+                user: action.payload
             };
         case LOGOUT_USER:
             return {
                 ...state,
                 isAuthenticated: false,
-                user: null,
+                user: null
             };
         default:
             return state;
