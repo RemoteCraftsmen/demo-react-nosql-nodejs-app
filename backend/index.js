@@ -5,10 +5,13 @@ const HTTP = require('http-status-codes');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const di = require('./di');
 
 const config = require('./config');
 
 const app = express();
+
+app.set('di', di);
 
 app.use(helmet());
 
