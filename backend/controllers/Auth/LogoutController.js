@@ -1,4 +1,4 @@
-class RegisterController {
+class LogoutController {
     constructor(userService, httpStatusCodes) {
         this.userService = userService;
         this.httpStatusCodes = httpStatusCodes;
@@ -17,4 +17,4 @@ class RegisterController {
     }
 }
 
-module.exports = RegisterController;
+module.exports = LogoutController;
