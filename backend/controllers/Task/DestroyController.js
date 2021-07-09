@@ -1,8 +1,7 @@
-const { StatusCodes } = require('http-status-codes');
-
 class DestroyController {
-    constructor(taskService) {
+    constructor(taskService, httpStatusCodes) {
         this.taskService = taskService;
+        this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
@@ -15,12 +14,12 @@ class DestroyController {
         }
 
         if (task.user_id !== req.session.user.id) {
-            return res.sendStatus(StatusCodes.FORBIDDEN);
+            return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
         await this.taskService.destroy(task._id, task._rev);
 
-        return res.sendStatus(StatusCodes.OK);
+        return res.sendStatus(this.httpStatusCodes.OK);
     }
 }
 

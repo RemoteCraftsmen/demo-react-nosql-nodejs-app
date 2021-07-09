@@ -1,8 +1,7 @@
-const { StatusCodes } = require('http-status-codes');
-
 class UpdateController {
-    constructor(taskService) {
+    constructor(taskService, httpStatusCodes) {
         this.taskService = taskService;
+        this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
@@ -16,7 +15,7 @@ class UpdateController {
         }
 
         if (task.user_id !== req.session.user.id) {
-            return res.sendStatus(StatusCodes.FORBIDDEN);
+            return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
         await this.taskService.update({
@@ -25,7 +24,7 @@ class UpdateController {
             completed
         });
 
-        return res.sendStatus(StatusCodes.OK);
+        return res.sendStatus(this.httpStatusCodes.OK);
     }
 }
 

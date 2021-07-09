@@ -1,15 +1,14 @@
-const { StatusCodes } = require('http-status-codes');
-
 class RegisterController {
-    constructor(userService) {
+    constructor(userService, httpStatusCodes) {
         this.userService = userService;
+        this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
         const { email, password, password_confirmation } = req.body;
 
         if ((!email, !password || !password_confirmation || password !== password_confirmation)) {
-            return res.sendStatus(StatusCodes.BAD_REQUEST);
+            return res.sendStatus(this.httpStatusCodes.BAD_REQUEST);
         }
 
         const user = await this.userService.register(email, password);
@@ -18,7 +17,7 @@ class RegisterController {
 
         req.session.user = user;
 
-        return res.status(StatusCodes.OK).json(user);
+        return res.status(this.httpStatusCodes.OK).json(user);
     }
 }
 

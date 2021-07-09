@@ -1,8 +1,7 @@
-const { StatusCodes } = require('http-status-codes');
-
 class LoginController {
-    constructor(userService) {
+    constructor(userService, httpStatusCodes) {
         this.userService = userService;
+        this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
@@ -11,12 +10,12 @@ class LoginController {
         const user = await this.userService.login(email, password);
 
         if (!user) {
-            return res.sendStatus(StatusCodes.UNAUTHORIZED);
+            return res.sendStatus(this.httpStatusCodes.UNAUTHORIZED);
         }
 
         req.session.user = user;
 
-        return res.status(StatusCodes.OK).json(user);
+        return res.status(this.httpStatusCodes.OK).json(user);
     }
 }
 

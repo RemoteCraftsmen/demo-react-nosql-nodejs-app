@@ -1,8 +1,7 @@
-const { StatusCodes } = require('http-status-codes');
-
 class RegisterController {
-    constructor(userService) {
+    constructor(userService, httpStatusCodes) {
         this.userService = userService;
+        this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res, next) {
@@ -14,7 +13,7 @@ class RegisterController {
             });
         }
 
-        return res.sendStatus(StatusCodes.OK);
+        return res.sendStatus(this.httpStatusCodes.OK);
     }
 }
 

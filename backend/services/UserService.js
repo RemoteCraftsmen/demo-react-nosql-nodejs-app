@@ -1,14 +1,18 @@
-const bcrypt = require('bcryptjs');
 const BaseModelService = require('./baseModelService');
 
 class UserService extends BaseModelService {
+    constructor(bcryptjs) {
+        super();
+        this.bcryptjs = bcryptjs;
+    }
+
     static get table() {
         return 'users';
     }
 
     static register(email, password) {
-        const salt = bcrypt.genSaltSync(10);
-        const encryptedPassword = bcrypt.hashSync(password, salt);
+        const salt = this.bcryptjs.genSaltSync(10);
+        const encryptedPassword = this.bcryptjs.hashSync(password, salt);
 
         return this.create({
             email,
@@ -29,8 +33,9 @@ class UserService extends BaseModelService {
             return null;
         }
 
-        if (bcrypt.compareSync(password, user.password)) {
+        if (this.bcryptjs.compareSync(password, user.password)) {
             delete user.password;
+
             return user;
         }
 

@@ -11,6 +11,14 @@ module.exports = {
                 class: 'services/SequelizeFactory',
                 method: 'create'
             }
+        },
+        userService: {
+            class: 'services/UserService',
+            arguments: ['%bcryptjs']
+        },
+        taskService: {
+            class: 'services/TaskService',
+            arguments: ['%bcryptjs']
         }
     }
 };

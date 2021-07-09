@@ -1,8 +1,7 @@
-const { StatusCodes } = require('http-status-codes');
-
 class StoreController {
-    constructor(taskService) {
+    constructor(taskService, httpStatusCodes) {
         this.taskService = taskService;
+        this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
@@ -14,7 +13,7 @@ class StoreController {
             created_at: Date.now()
         });
 
-        return res.status(StatusCodes.CREATED).json(task);
+        return res.status(this.httpStatusCodes.CREATED).json(task);
     }
 }
 
