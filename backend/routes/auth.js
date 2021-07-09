@@ -7,9 +7,9 @@ module.exports = di => {
     const registerController = di.get('controllers.auth.registerController');
     const logoutController = di.get('controllers.auth.logoutController');
 
-    router.post('/auth/login', (...args) => loginController.invoke(...args));
-    router.post('/auth/register', (...args) => registerController.invoke(...args));
-    router.post('/auth/logout', (...args) => logoutController.invoke(...args));
+    router.post('/login', (...args) => loginController.invoke(...args));
+    router.post('/register', (...args) => registerController.invoke(...args));
+    router.post('/logout', (...args) => logoutController.invoke(...args));
 
     return router;
 };

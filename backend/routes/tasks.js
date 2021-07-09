@@ -10,10 +10,10 @@ module.exports = di => {
     const updateController = di.get('controllers.task.updateController');
     const destroyController = di.get('controllers.task.destroyController');
 
-    router.get('/tasks', [MustBeLoggedIn], (...args) => indexController.invoke(...args));
-    router.post('/tasks', [MustBeLoggedIn], (...args) => storeController.invoke(...args));
-    router.delete('/tasks', [MustBeLoggedIn], (...args) => updateController.invoke(...args));
-    router.patch('/tasks', [MustBeLoggedIn], (...args) => destroyController.invoke(...args));
+    router.get('/', [MustBeLoggedIn], (...args) => indexController.invoke(...args));
+    router.post('/', [MustBeLoggedIn], (...args) => storeController.invoke(...args));
+    router.delete('/', [MustBeLoggedIn], (...args) => updateController.invoke(...args));
+    router.patch('/', [MustBeLoggedIn], (...args) => destroyController.invoke(...args));
 
     return router;
 };
