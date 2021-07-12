@@ -13,13 +13,5 @@ app.listen(config.app.port, () => {
 async function shutdown(status = 0) {
     const di = app.get('di');
 
-    try {
-        console.info('Shutting down sequelize connection ...');
-        const { sequelize } = await di.get('sequelize');
-        await sequelize.close();
-    } catch (e) {
-        console.error('There was an error during shutting down sequelize connection!');
-    }
-
     process.exit(status);
 }
