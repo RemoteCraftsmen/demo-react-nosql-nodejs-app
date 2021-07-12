@@ -22,6 +22,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(errorHandler);
 
+require('./plugins/cors')(app);
+
 const redis = new RedisStore({
     host: config.redis.host,
     port: config.redis.port,
@@ -30,27 +32,6 @@ const redis = new RedisStore({
 });
 
 redis.client.unref();
-
-const originsWhitelist = ['http://localhost:8000', config.app.frontendUrl];
-const corsOptions = {
-    origin(origin, callback) {
-        if (originsWhitelist.includes(origin) || origin.includes('//localhost:') || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true
-};
-
-app.use(cors(corsOptions));
-app.use((err, req, res, next) => {
-    if (err.message !== 'Not allowed by CORS') {
-        return next();
-    }
-
-    return res.status(HTTP.OK).json({ code: 200, message: 'Request not allowed by CORS' });
-});
 
 app.use(
     session({
