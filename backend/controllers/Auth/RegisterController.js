@@ -5,11 +5,7 @@ class RegisterController {
     }
 
     async invoke(req, res) {
-        const { email, password, password_confirmation } = req.body;
-
-        if (!email || !password || !password_confirmation || password !== password_confirmation) {
-            return res.sendStatus(this.httpStatusCodes.BAD_REQUEST);
-        }
+        const { email, password } = req.body;
 
         const user = await this.userService.register(email, password);
 

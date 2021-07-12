@@ -1,5 +1,8 @@
 const express = require('express');
 
+const taskValidator = require('../validators/task');
+const validate = require('../middleware/validate');
+
 const router = express.Router();
 
 const MustBeLoggedIn = require('../middleware/MustBeLoggedIn');
@@ -11,9 +14,13 @@ module.exports = di => {
     const destroyController = di.get('controllers.task.destroyController');
 
     router.get('/', [MustBeLoggedIn], (...args) => indexController.invoke(...args));
-    router.post('/', [MustBeLoggedIn], (...args) => storeController.invoke(...args));
-    router.delete('/', [MustBeLoggedIn], (...args) => updateController.invoke(...args));
-    router.patch('/', [MustBeLoggedIn], (...args) => destroyController.invoke(...args));
+    router.post('/', [MustBeLoggedIn], [taskValidator.store, validate], (...args) => storeController.invoke(...args));
+    router.delete('/', [MustBeLoggedIn], [taskValidator.update, validate], (...args) =>
+        updateController.invoke(...args)
+    );
+    router.patch('/', [MustBeLoggedIn], [taskValidator.destroy, validate], (...args) =>
+        destroyController.invoke(...args)
+    );
 
     return router;
 };

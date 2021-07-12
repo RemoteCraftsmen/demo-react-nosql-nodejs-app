@@ -1,0 +1,35 @@
+const { body } = require('express-validator');
+const params = {
+    minPasswordLength: 6,
+    maxPasswordLength: 32
+};
+
+module.exports = [
+    body('email').trim().not().isEmpty().withMessage('Email is required').isEmail().withMessage('Invalid email'),
+
+    body('password')
+        .trim()
+        .notEmpty()
+        .withMessage('Password is required')
+        .isLength({ min: params.minPasswordLength, max: params.maxPasswordLength })
+        .withMessage(`Password length must be between ${params.minPasswordLength} and ${params.maxPasswordLength}`),
+
+    body('password_confirmation')
+        .trim()
+        .notEmpty()
+        .withMessage('Password confirmation is required')
+        .isLength({ min: params.minPasswordLength, max: params.maxPasswordLength })
+        .withMessage(
+            `Password confirmation length must be between ${params.minPasswordLength} and ${params.maxPasswordLength}`
+        )
+        .bail()
+        .custom((password_confirmation, { req }) => {
+            const { password } = req.body;
+
+            if (password !== password_confirmation) {
+                throw new Error('Passwords are not equal');
+            }
+
+            return true;
+        })
+];
