@@ -15,12 +15,10 @@ module.exports = di => {
 
     router.get('/', [MustBeLoggedIn], (...args) => indexController.invoke(...args));
     router.post('/', [MustBeLoggedIn], [taskValidator.store, validate], (...args) => storeController.invoke(...args));
-    router.delete('/', [MustBeLoggedIn], [taskValidator.update, validate], (...args) =>
+    router.put('/:id', [MustBeLoggedIn], [taskValidator.update, validate], (...args) =>
         updateController.invoke(...args)
     );
-    router.patch('/', [MustBeLoggedIn], [taskValidator.destroy, validate], (...args) =>
-        destroyController.invoke(...args)
-    );
+    router.delete('/:id', [MustBeLoggedIn], (...args) => destroyController.invoke(...args));
 
     return router;
 };

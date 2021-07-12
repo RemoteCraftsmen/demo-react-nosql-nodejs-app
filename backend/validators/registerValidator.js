@@ -5,7 +5,27 @@ const params = {
 };
 
 module.exports = [
-    body('email').trim().not().isEmpty().withMessage('Email is required').isEmail().withMessage('Invalid email'),
+    body('email')
+        .trim()
+        .not()
+        .isEmpty()
+        .withMessage('Email is required')
+        .isEmail()
+        .withMessage('Invalid email')
+        .bail()
+        .custom(async (email, { req }) => {
+            const di = req.app.get('di');
+
+            const userService = di.get('userService');
+
+            const user = await userService.findOne({ email });
+
+            if (user) {
+                throw new Error('Email taken');
+            }
+
+            return true;
+        }),
 
     body('password')
         .trim()

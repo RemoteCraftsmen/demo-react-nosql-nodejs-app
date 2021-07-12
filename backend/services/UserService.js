@@ -29,9 +29,7 @@ class UserService extends BaseModelService {
         }
 
         if (this.bcryptjs.compareSync(password, user.password)) {
-            const user = await this.findOne({ email });
-
-            return user;
+            return this.findOne({ email });
         }
 
         return null;
