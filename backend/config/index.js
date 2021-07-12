@@ -19,7 +19,7 @@ const config = {
             pass: env('COUCHDB_PASSWORD')
         }
     },
-    redis: {
+    redisSession: {
         host: env('REDIS_HOST'),
         port: env('REDIS_PORT'),
         pass: env('REDIS_PASSWORD'),
