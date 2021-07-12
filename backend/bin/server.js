@@ -21,5 +21,13 @@ async function shutdown(status = 0) {
         console.error('There was an error during shutting down sequelize connection!');
     }
 
+    try {
+        console.info('Shutting down session redis connection ...');
+        const redisSessionClient = await di.get('redisSessionClient');
+        await redisSessionClient.quit();
+    } catch (e) {
+        console.error('There was an error during shutting down redis connection!');
+    }
+
     process.exit(status);
 }
