@@ -18,11 +18,7 @@ class UpdateController {
             return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
-        await this.taskService.update({
-            ...task,
-            name,
-            completed
-        });
+        await this.task.update({ name, completed });
 
         const updatedTask = await this.taskService.findById(task.id);
 
