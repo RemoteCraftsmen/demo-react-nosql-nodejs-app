@@ -5,13 +5,6 @@ module.exports = {
         config
     },
     services: {
-        sequelize: {
-            arguments: ['%sequelize', '%config%'],
-            factory: {
-                class: 'services/SequelizeFactory',
-                method: 'create'
-            }
-        },
         userService: {
             class: 'services/UserService',
             arguments: ['%bcryptjs']
