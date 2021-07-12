@@ -13,7 +13,7 @@ class StoreController {
             created_at: Date.now()
         });
 
-        return res.status(this.httpStatusCodes.CREATED).json(task);
+        return res.status(this.httpStatusCodes.CREATED).send(task);
     }
 }
 

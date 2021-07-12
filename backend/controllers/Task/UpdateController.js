@@ -11,7 +11,7 @@ class UpdateController {
         const task = await this.taskService.findById(id);
 
         if (!task) {
-            return res.sendStatus(404);
+            return res.sendStatus(this.httpStatusCodes.NOT_FOUND);
         }
 
         if (task.user_id !== req.session.user.id) {
@@ -24,7 +24,9 @@ class UpdateController {
             completed
         });
 
-        return res.sendStatus(this.httpStatusCodes.OK);
+        const updatedTask = await this.taskService.findById(task.id);
+
+        return res.send(updatedTask);
     }
 }
 

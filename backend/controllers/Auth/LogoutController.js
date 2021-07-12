@@ -13,7 +13,7 @@ class LogoutController {
             });
         }
 
-        return res.sendStatus(this.httpStatusCodes.OK);
+        return res.sendStatus(this.httpStatusCodes.NO_CONTENT);
     }
 }
 

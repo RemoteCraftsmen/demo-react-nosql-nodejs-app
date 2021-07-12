@@ -10,16 +10,16 @@ class DestroyController {
         const task = await this.taskService.findById(id);
 
         if (!task) {
-            return res.sendStatus(404);
+            return res.sendStatus(this.httpStatusCodes.NO_CONTENT);
         }
 
         if (task.user_id !== req.session.user.id) {
             return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
-        await this.taskService.destroy(task._id, task._rev);
+        await task.destroy();
 
-        return res.sendStatus(this.httpStatusCodes.OK);
+        return res.sendStatus(this.httpStatusCodes.NO_CONTENT);
     }
 }
 

@@ -15,7 +15,7 @@ class LoginController {
 
         req.session.user = user;
 
-        return res.status(this.httpStatusCodes.OK).json(user);
+        return res.send(user);
     }
 }
 
