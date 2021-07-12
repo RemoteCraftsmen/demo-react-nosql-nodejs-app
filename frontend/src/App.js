@@ -10,8 +10,6 @@ import SiteNavigation from './components/SiteNavigation';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import css from '../src/App.css';
-
 import store from './store';
 
 const styles = theme => ({
@@ -31,7 +29,6 @@ class App extends Component {
 
     render() {
         const { classes } = this.props;
-        const { spacing } = this.state;
 
         return (
             <Provider store={store}>
