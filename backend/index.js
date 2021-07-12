@@ -5,6 +5,7 @@ const HTTP = require('http-status-codes');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const errorHandler = require('./plugins/errorHandler');
 const di = require('./di');
 const router = require('./routes')(di);
 
@@ -18,6 +19,8 @@ app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(errorHandler);
 
 const redis = new RedisStore({
     host: config.redis.host,
