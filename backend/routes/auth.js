@@ -2,10 +2,14 @@ const express = require('express');
 
 const router = express.Router();
 
-const AuthController = require('../controllers/AuthController');
+module.exports = di => {
+    const loginController = di.get('controllers.auth.loginController');
+    const registerController = di.get('controllers.auth.registerController');
+    const logoutController = di.get('controllers.auth.logoutController');
 
-router.post('/auth/login', new AuthController().login);
-router.post('/auth/register', new AuthController().register);
-router.get('/auth/logout', new AuthController().logout);
+    router.post('/login', (...args) => loginController.invoke(...args));
+    router.post('/register', (...args) => registerController.invoke(...args));
+    router.post('/logout', (...args) => logoutController.invoke(...args));
 
-module.exports = router;
+    return router;
+};

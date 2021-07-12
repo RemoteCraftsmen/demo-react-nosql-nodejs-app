@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const env = (key, defaultValue = null) => process.env[key] || defaultValue;
-const isEnabled = key => env(key) && env(key) === 'true';
 
 const config = {
     app: {
@@ -16,14 +15,14 @@ const config = {
         protocol: env('COUCHDB_PROTOCOL'),
         port: env('COUCHDB_PORT'),
         auth: {
-            user: env('COUCHDB_AUTH_USER'),
-            pass: env('COUCHDB_AUTH_PASS')
+            user: env('COUCHDB_USER'),
+            pass: env('COUCHDB_PASSWORD')
         }
     },
     redis: {
         host: env('REDIS_HOST'),
         port: env('REDIS_PORT'),
-        pass: env('REDIS_PASS'),
+        pass: env('REDIS_PASSWORD'),
         ttl: env('REDIS_TTL')
     }
 };

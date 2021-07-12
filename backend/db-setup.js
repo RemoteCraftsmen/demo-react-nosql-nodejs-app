@@ -1,5 +1,13 @@
-const db = require('./config').db;
-const url = `${db.protocol}://${db.auth.user}:${db.auth.pass}@${db.host}:${db.port}`;
+const {
+    db: {
+        protocol,
+        host,
+        port,
+        auth: { user, pass }
+    }
+} = require('./config');
+
+const url = `${protocol}://${user}:${pass}@${host}:${port}`;
 const nano = require('nano')(url);
 
 (async () => {

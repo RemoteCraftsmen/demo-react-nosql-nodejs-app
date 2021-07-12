@@ -8,7 +8,7 @@ services:
         volumes:
             - ~/data/couchdb.react-todo.docker:/usr/local/var/lib/couchdb
         env_file:
-            - ./docker/couchdb/config.env
+            - ./.env
         ports:
             - 127.0.0.1:5986:5986
             - 127.0.0.1:5984:5984
@@ -18,10 +18,16 @@ services:
     redis:
         image: redis:latest
         container_name: redis.react-couchdb-todo.docker
+        environment:
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+        command:
+            - 'bash'
+            - '-c'
+            - 'docker-entrypoint.sh --requirepass "$$REDIS_PASSWORD"'
+        ports:
+            - 127.0.0.1:${REDIS_PORT}:6379
         networks:
             - global
-        ports:
-            - 127.0.0.1:6379:6379
 
 networks:
     global:

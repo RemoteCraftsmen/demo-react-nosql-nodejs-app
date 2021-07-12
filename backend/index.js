@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const di = require('./di');
+const router = require('./routes')(di);
 
 const config = require('./config');
 
@@ -61,6 +62,6 @@ app.use(
     })
 );
 
-require('./appRoutes')(app);
+app.use('/api', router);
 
 module.exports = app;
