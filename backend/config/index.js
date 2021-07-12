@@ -8,7 +8,8 @@ const config = {
         port: parseInt(env('PORT', 3000)),
         host: env('APP_HOST', '127.0.0.1'),
         secret: env('APP_SECRET'),
-        frontendUrl: env('APP_FRONTEND_URL')
+        frontendUrl: env('APP_FRONTEND_URL'),
+        jsonRequestSizeLimit: env('APP_JSON_REQUEST_SIZE_LIMIT', '1mb')
     },
     db: {
         host: env('COUCHDB_HOST'),
@@ -19,7 +20,7 @@ const config = {
             pass: env('COUCHDB_PASSWORD')
         }
     },
-    redis: {
+    redisSession: {
         host: env('REDIS_HOST'),
         port: env('REDIS_PORT'),
         pass: env('REDIS_PASSWORD'),
