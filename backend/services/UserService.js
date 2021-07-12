@@ -22,21 +22,14 @@ class UserService extends BaseModelService {
     }
 
     static async login(email, password) {
-        const user = await this.findOne(
-            {
-                email
-            },
-            { sort: [{ created_at: 'desc' }] }
-        );
+        const user = await this.findOne({ email });
 
         if (!user) {
             return null;
         }
 
         if (this.bcryptjs.compareSync(password, user.password)) {
-            delete user.password;
-
-            return user;
+            return this.findOne({ email });
         }
 
         return null;

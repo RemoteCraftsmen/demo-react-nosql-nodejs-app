@@ -5,7 +5,7 @@ function MustBeLoggedIn(request, response, next) {
         return next();
     }
 
-    return response.status(HTTP.UNAUTHORIZED).json({});
+    return response.sendStatus(HTTP.UNAUTHORIZED);
 }
 
 module.exports = MustBeLoggedIn;
