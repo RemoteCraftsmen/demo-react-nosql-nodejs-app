@@ -6,7 +6,7 @@ module.exports = app => {
         ? config.app.routesWithoutBodyParser.split(',').map(site => site.trim())
         : [];
 
-    app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
+    app.use(bodyParser.urlencoded({ extended: true, limit: config.app.jsonRequestSizeLimit }));
     app.use((req, res, next) => {
         if (routesWithoutBodyParser.find(item => item === req.originalUrl)) {
             next();
