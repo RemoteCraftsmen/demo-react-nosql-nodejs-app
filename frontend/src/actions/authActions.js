@@ -4,14 +4,13 @@ import { SET_USER, LOGOUT_USER } from './types';
 
 export const registerUser = (data, history) => async dispatch => {
     try {
-        const response = await axios.post(process.env.REACT_APP_API_URL + '/api/auth/register', data, {
+        await axios.post(process.env.REACT_APP_API_URL + '/api/auth/register', data, {
             withCredentials: true
         });
-        const user = response.data;
 
-        setUser(user, dispatch);
+        const { email, password } = data;
 
-        history.push('/tasks');
+        dispatch(loginUser({ email, password }, history));
     } catch (error) {
         console.error(error);
     }

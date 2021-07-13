@@ -10,7 +10,7 @@ class Task extends Component {
             task: {
                 id: props.id,
                 name: props.name,
-                completed: JSON.parse(props.completed)
+                completed: props.completed === 'true'
             }
         };
     }

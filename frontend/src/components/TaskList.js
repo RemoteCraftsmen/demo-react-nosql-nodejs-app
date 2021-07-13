@@ -94,8 +94,6 @@ export default class TaskList extends Component {
     render() {
         const { fetching, tasks, notifications, isLoggedIn } = this.state;
 
-        console.log(tasks);
-
         const tasksList =
             !fetching &&
             tasks.map(task => (
