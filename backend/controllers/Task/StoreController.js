@@ -9,8 +9,8 @@ class StoreController {
 
         const task = await this.taskService.create({
             name,
-            user_id: req.session.user.id,
-            created_at: Date.now()
+            userId: req.session.user.id,
+            createdAt: Date.now()
         });
 
         return res.status(this.httpStatusCodes.CREATED).send(task);

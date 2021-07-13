@@ -17,7 +17,7 @@ class UserService extends BaseModelService {
         return this.create({
             email,
             password: encryptedPassword,
-            created_at: Date.now()
+            createdAt: Date.now()
         });
     }
 

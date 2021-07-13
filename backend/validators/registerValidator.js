@@ -34,7 +34,7 @@ module.exports = [
         .isLength({ min: params.minPasswordLength, max: params.maxPasswordLength })
         .withMessage(`Password length must be between ${params.minPasswordLength} and ${params.maxPasswordLength}`),
 
-    body('password_confirmation')
+    body('passwordConfirmation')
         .trim()
         .notEmpty()
         .withMessage('Password confirmation is required')
@@ -43,10 +43,10 @@ module.exports = [
             `Password confirmation length must be between ${params.minPasswordLength} and ${params.maxPasswordLength}`
         )
         .bail()
-        .custom((password_confirmation, { req }) => {
+        .custom((passwordConfirmation, { req }) => {
             const { password } = req.body;
 
-            if (password !== password_confirmation) {
+            if (password !== passwordConfirmation) {
                 throw new Error('Passwords are not equal');
             }
 

@@ -14,7 +14,7 @@ class UpdateController {
             return res.sendStatus(this.httpStatusCodes.NOT_FOUND);
         }
 
-        if (task.user_id !== req.session.user.id) {
+        if (task.userId !== req.session.user.id) {
             return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
