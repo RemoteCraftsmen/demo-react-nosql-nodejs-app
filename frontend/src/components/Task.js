@@ -10,7 +10,7 @@ class Task extends Component {
             task: {
                 id: props.id,
                 name: props.name,
-                completed: props.completed
+                completed: JSON.parse(props.completed)
             }
         };
     }
@@ -18,7 +18,7 @@ class Task extends Component {
     updateItem = async () => {
         const { task } = this.state;
 
-        await axios.patch(
+        await axios.put(
             process.env.REACT_APP_API_URL + '/api/tasks/' + task.id,
             { ...task },
             { withCredentials: true }

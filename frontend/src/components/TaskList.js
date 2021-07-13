@@ -13,7 +13,8 @@ export default class TaskList extends Component {
         this.state = {
             isLoggedIn: true,
             tasks: [],
-            notifications: []
+            notifications: [],
+            fetching: true
         };
     }
 
@@ -24,7 +25,8 @@ export default class TaskList extends Component {
             response = await axios.get(process.env.REACT_APP_API_URL + '/api/tasks', { withCredentials: true });
 
             this.setState({
-                tasks: response.data.tasks
+                tasks: response.data.tasks,
+                fetching: false
             });
         } catch (error) {
             console.error(error);
@@ -90,18 +92,24 @@ export default class TaskList extends Component {
     };
 
     render() {
-        const tasks = this.state.tasks.map(task => (
-            <Task
-                key={task.id}
-                id={task.id}
-                name={task.name}
-                completed={task.completed}
-                removeItem={this.removeItem}
-                addNotification={this.addNotification}
-            />
-        ));
+        const { fetching, tasks, notifications, isLoggedIn } = this.state;
 
-        const notifications = this.state.notifications.map(notification => (
+        console.log(tasks);
+
+        const tasksList =
+            !fetching &&
+            tasks.map(task => (
+                <Task
+                    key={task.id}
+                    id={task.id}
+                    name={task.name}
+                    completed={task.completed}
+                    removeItem={this.removeItem}
+                    addNotification={this.addNotification}
+                />
+            ));
+
+        const notificationsComponents = notifications.map(notification => (
             <Notification
                 key={notification.ts}
                 variant={notification.variant}
@@ -113,7 +121,7 @@ export default class TaskList extends Component {
 
         return (
             <div>
-                {this.state.isLoggedIn ? (
+                {isLoggedIn ? (
                     <div>
                         <Typography
                             component="h1"
@@ -126,8 +134,8 @@ export default class TaskList extends Component {
 
                         <AddItem onClick={this.handleAddItem} />
 
-                        {tasks.length > 0 ? (
-                            tasks
+                        {tasksList.length ? (
+                            tasksList
                         ) : (
                             <Typography
                                 component="h2"
@@ -139,7 +147,7 @@ export default class TaskList extends Component {
                             </Typography>
                         )}
 
-                        {notifications}
+                        {notificationsComponents}
                     </div>
                 ) : (
                     <Unauthorized />

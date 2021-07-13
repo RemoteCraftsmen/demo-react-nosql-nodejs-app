@@ -35,9 +35,11 @@ class AddItem extends Component {
                         variant="contained"
                         color="secondary"
                         style={{ width: '19%' }}
+                        disabled={!this.state.name.length}
                         onClick={() => {
-                            this.setState({ name: '' });
                             this.props.onClick(this.state.name);
+
+                            this.setState({ name: '' });
                         }}
                     >
                         Add
