@@ -9,9 +9,7 @@ class RegisterController {
 
         const user = await this.userService.register(email, password);
 
-        const registeredUser = await this.userService.findById(user.id);
-
-        delete registeredUser.password;
+        const registeredUser = await this.userService.getUserByIdWithExcludedPassword(user.id);
 
         req.session.user = registeredUser;
 

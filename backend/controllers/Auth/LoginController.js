@@ -13,8 +13,6 @@ class LoginController {
             return res.sendStatus(this.httpStatusCodes.UNAUTHORIZED);
         }
 
-        delete user.password;
-
         req.session.user = user;
 
         return res.send(user);
