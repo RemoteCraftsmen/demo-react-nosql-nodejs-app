@@ -2,30 +2,28 @@ import React, { Component } from 'react';
 import AddItem from './AddItem';
 import Task from './Task';
 import { Typography } from '@material-ui/core';
-import axios from 'axios';
 import Notification from './Notification';
 import Unauthorized from './Unauthorized';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchTasks, addTask, updateTask, deleteTask } from '../actions/taskActions';
 
-export default class TaskList extends Component {
+class TaskList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isLoggedIn: true,
-            tasks: [],
             notifications: [],
             fetching: true
         };
     }
 
     componentDidMount = async () => {
-        let response;
-
         try {
-            response = await axios.get(process.env.REACT_APP_API_URL + '/api/tasks', { withCredentials: true });
+            await this.props.fetchTasks();
 
             this.setState({
-                tasks: response.data.tasks,
                 fetching: false
             });
         } catch (error) {
@@ -34,23 +32,9 @@ export default class TaskList extends Component {
         }
     };
 
-    handleAddItem = async name => {
-        let response;
-
+    handleAddTask = async name => {
         try {
-            response = await axios.post(
-                process.env.REACT_APP_API_URL + '/api/tasks',
-                { name },
-                { withCredentials: true }
-            );
-
-            const task = response.data;
-
-            this.setState(state => {
-                return {
-                    tasks: [...state.tasks, task]
-                };
-            });
+            await this.props.addTask(name);
 
             this.addNotification('Task added', 'info');
         } catch (error) {
@@ -59,18 +43,26 @@ export default class TaskList extends Component {
         }
     };
 
-    removeItem = async id => {
-        await axios.delete(process.env.REACT_APP_API_URL + '/api/tasks/' + id, { withCredentials: true });
+    handleUpdateTask = async task => {
+        try {
+            await this.props.updateTask(task);
 
-        this.setState(state => {
-            const tasks = state.tasks.filter(task => task.id !== id);
+            this.addNotification('Task updated', 'info');
+        } catch (error) {
+            console.error(error);
+            this.setState({ isLoggedIn: false });
+        }
+    };
 
-            return {
-                tasks
-            };
-        });
+    handleDeleteTask = async id => {
+        try {
+            await this.props.deleteTask(id);
 
-        this.addNotification('Task removed', 'error');
+            this.addNotification('Task removed', 'error');
+        } catch (error) {
+            console.error(error);
+            this.setState({ isLoggedIn: false });
+        }
     };
 
     closeNotification = async ts => {
@@ -92,7 +84,8 @@ export default class TaskList extends Component {
     };
 
     render() {
-        const { fetching, tasks, notifications, isLoggedIn } = this.state;
+        const { fetching, notifications, isLoggedIn } = this.state;
+        const { tasks } = this.props;
 
         const tasksList =
             !fetching &&
@@ -102,7 +95,8 @@ export default class TaskList extends Component {
                     id={task.id}
                     name={task.name}
                     completed={task.completed}
-                    removeItem={this.removeItem}
+                    updateTask={this.handleUpdateTask}
+                    deleteTask={this.handleDeleteTask}
                     addNotification={this.addNotification}
                 />
             ));
@@ -130,7 +124,7 @@ export default class TaskList extends Component {
                             Tasks
                         </Typography>
 
-                        <AddItem onClick={this.handleAddItem} />
+                        <AddItem onClick={this.handleAddTask} />
 
                         {tasksList.length ? (
                             tasksList
@@ -154,3 +148,17 @@ export default class TaskList extends Component {
         );
     }
 }
+
+TaskList.propTypes = {
+    tasks: PropTypes.array.isRequired,
+    fetchTasks: PropTypes.func.isRequired,
+    addTask: PropTypes.func.isRequired,
+    updateTask: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+    tasks: state.tasks
+});
+
+export default connect(mapStateToProps, { fetchTasks, addTask, updateTask, deleteTask })(TaskList);

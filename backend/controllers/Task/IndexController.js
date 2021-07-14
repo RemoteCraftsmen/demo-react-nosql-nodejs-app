@@ -7,7 +7,7 @@ class IndexController {
     async invoke(req, res) {
         const tasks = await this.taskService.findAll({ userId: req.session.user.id });
 
-        return res.send({ tasks });
+        return res.send(tasks);
     }
 }
 

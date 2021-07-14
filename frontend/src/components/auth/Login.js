@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Typography, useMediaQuery } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
 import { withRouter } from 'react-router-dom';

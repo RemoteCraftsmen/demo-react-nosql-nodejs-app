@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Card, Button, Checkbox, TextField } from '@material-ui/core';
-import axios from 'axios';
 
 class Task extends Component {
     constructor(props) {
@@ -14,18 +13,6 @@ class Task extends Component {
             }
         };
     }
-
-    updateItem = async () => {
-        const { task } = this.state;
-
-        await axios.put(
-            process.env.REACT_APP_API_URL + '/api/tasks/' + task.id,
-            { ...task },
-            { withCredentials: true }
-        );
-
-        this.props.addNotification('Task updated', 'success');
-    };
 
     handleChange = event => {
         let { name, type, value, checked } = event.target;
@@ -48,18 +35,23 @@ class Task extends Component {
             },
             () => {
                 if (isCheckbox) {
-                    this.updateItem();
+                    this.props.updateTask(this.state.task);
                 }
             }
         );
     };
 
     render() {
+        const {
+            task: { id, name, completed },
+            task
+        } = this.state;
+
         return (
             <Card className="todo-item">
                 <Checkbox
                     name="completed"
-                    checked={this.state.task.completed}
+                    checked={completed}
                     color="secondary"
                     onChange={this.handleChange}
                     style={{ marginRight: 25 }}
@@ -68,7 +60,7 @@ class Task extends Component {
                 <TextField
                     name="name"
                     label="Name"
-                    value={this.state.task.name}
+                    value={name}
                     onChange={this.handleChange}
                     style={{ flexGrow: 1, marginRight: 25 }}
                 />
@@ -78,7 +70,7 @@ class Task extends Component {
                         variant="contained"
                         color="primary"
                         className="save-todo-item"
-                        onClick={this.updateItem}
+                        onClick={() => this.props.updateTask(task)}
                         style={{ marginRight: '15px' }}
                     >
                         Save
@@ -88,7 +80,7 @@ class Task extends Component {
                         variant="contained"
                         color="secondary"
                         className="save-todo-item"
-                        onClick={() => this.props.removeItem(this.state.task.id)}
+                        onClick={() => this.props.deleteTask(id)}
                     >
                         Remove
                     </Button>
