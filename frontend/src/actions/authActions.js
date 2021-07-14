@@ -1,12 +1,10 @@
-import axios from 'axios';
+import axios from '../plugins/axios';
 
 import { SET_USER, LOGOUT_USER } from './types';
 
 export const registerUser = (data, history) => async dispatch => {
     try {
-        await axios.post(process.env.REACT_APP_API_URL + '/api/auth/register', data, {
-            withCredentials: true
-        });
+        await axios.post('/api/auth/register', data);
 
         const { email, password } = data;
 
@@ -18,9 +16,7 @@ export const registerUser = (data, history) => async dispatch => {
 
 export const loginUser = (data, history) => async dispatch => {
     try {
-        const response = await axios.post(process.env.REACT_APP_API_URL + '/api/auth/login', data, {
-            withCredentials: true
-        });
+        const response = await axios.post('/api/auth/login', data);
         const user = response.data;
 
         setUser(user, dispatch);
@@ -33,7 +29,7 @@ export const loginUser = (data, history) => async dispatch => {
 
 export const logoutUser = history => async dispatch => {
     try {
-        await axios.post(process.env.REACT_APP_API_URL + '/api/auth/logout', { withCredentials: true });
+        await axios.post('/api/auth/logout');
 
         dispatch({
             type: LOGOUT_USER
