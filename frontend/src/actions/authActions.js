@@ -33,7 +33,7 @@ export const loginUser = (data, history) => async dispatch => {
 
 export const logoutUser = history => async dispatch => {
     try {
-        await axios.get(process.env.REACT_APP_API_URL + '/api/auth/logout', { withCredentials: true });
+        await axios.post(process.env.REACT_APP_API_URL + '/api/auth/logout', { withCredentials: true });
 
         dispatch({
             type: LOGOUT_USER

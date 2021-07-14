@@ -13,7 +13,7 @@ module.exports = di => {
 
     router.post('/login', [loginValidator, validate], (...args) => loginController.invoke(...args));
     router.post('/register', [registerValidator, validate], (...args) => registerController.invoke(...args));
-    router.get('/logout', (...args) => logoutController.invoke(...args));
+    router.post('/logout', (...args) => logoutController.invoke(...args));
 
     return router;
 };
