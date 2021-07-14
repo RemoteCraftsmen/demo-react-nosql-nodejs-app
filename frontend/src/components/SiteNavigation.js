@@ -29,7 +29,7 @@ class SiteNavigation extends Component {
                 <AppBar position="static">
                     <Toolbar>
                         <Grid container className={classes.grow} spacing={Number(spacing)} justify="center">
-                            <Grid item xs={8}>
+                            <Grid item xs={12} sm={10} md={8}>
                                 {this.props.auth.isAuthenticated ? (
                                     <div style={{ display: 'flex' }}>
                                         <Button>

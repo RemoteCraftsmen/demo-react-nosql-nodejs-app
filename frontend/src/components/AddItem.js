@@ -26,7 +26,7 @@ class AddItem extends Component {
                         id="outlined-bare"
                         placeholder="Task name"
                         variant="outlined"
-                        style={{ width: '80%' }}
+                        style={{ width: '75%' }}
                         value={this.state.name}
                         onChange={this.handleNameChange}
                     />
@@ -34,7 +34,7 @@ class AddItem extends Component {
                     <Button
                         variant="contained"
                         color="secondary"
-                        style={{ width: '19%' }}
+                        style={{ width: '20%' }}
                         disabled={!this.state.name.length}
                         onClick={() => {
                             this.props.onClick(this.state.name);

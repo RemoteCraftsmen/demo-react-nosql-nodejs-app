@@ -10,7 +10,13 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 const styles = theme => ({
     textField: {
         width: '500px',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        [theme.breakpoints.down('sm')]: {
+            width: '400px'
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: '280px'
+        }
     },
     form: {
         display: 'flex',

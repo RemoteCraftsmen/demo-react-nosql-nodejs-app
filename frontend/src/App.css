@@ -3,6 +3,7 @@
     display: flex;
     padding: 25px;
     justify-content: space-between;
+    align-items: center;
 }
 
 .save-todo-item {
@@ -14,11 +15,21 @@
     margin-top: 10px !important;
 }
 
+.MuiButtonBase-root-168 {
+    padding: 12px 0 !important;
+}
+
+.crud-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .add-item {
     margin-bottom: 25px;
     display: flex;
     justify-content: space-between;
-    min-width: 800px;
 }
 
 a.navigation-link {

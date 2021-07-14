@@ -9,6 +9,7 @@ import Logout from './components/auth/Logout';
 import SiteNavigation from './components/SiteNavigation';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import './App.css';
 
 import store from './store';
 
@@ -36,7 +37,7 @@ class App extends Component {
                     <SiteNavigation />
                     <div style={{ padding: 4 }}>
                         <Grid container className={classes.root} spacing={8} justify="center">
-                            <Grid item xs={8}>
+                            <Grid item xs={12} sm={10} md={8}>
                                 <Route exact path="/" component={Login} />
                                 <Route exact path="/login" component={Login} />
                                 <Route exact path="/register" component={Register} />

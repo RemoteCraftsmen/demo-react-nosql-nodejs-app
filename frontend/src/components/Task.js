@@ -49,29 +49,30 @@ class Task extends Component {
 
         return (
             <Card className="todo-item">
-                <Checkbox
-                    name="completed"
-                    checked={completed}
-                    color="secondary"
-                    onChange={this.handleChange}
-                    style={{ marginRight: 25 }}
-                />
+                <div className="input-and-checkox">
+                    <Checkbox
+                        name="completed"
+                        checked={completed}
+                        color="secondary"
+                        onChange={this.handleChange}
+                        style={{ marginRight: 25 }}
+                    />
 
-                <TextField
-                    name="name"
-                    label="Name"
-                    value={name}
-                    onChange={this.handleChange}
-                    style={{ flexGrow: 1, marginRight: 25 }}
-                />
+                    <TextField
+                        name="name"
+                        label="Name"
+                        value={name}
+                        onChange={this.handleChange}
+                        style={{ flexGrow: 1, marginRight: 25 }}
+                    />
+                </div>
 
-                <div>
+                <div className="crud-buttons">
                     <Button
                         variant="contained"
                         color="primary"
                         className="save-todo-item"
                         onClick={() => this.props.updateTask(task)}
-                        style={{ marginRight: '15px' }}
                     >
                         Save
                     </Button>
