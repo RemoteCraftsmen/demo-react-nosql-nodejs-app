@@ -10,10 +10,10 @@ export default (tasks = initialTasks, action) => {
             return [...tasks, action.payload.data];
         case UPDATE_TASK:
             return tasks.map(task => {
-                return task.id !== action.payload.id ? task : action.payload;
+                return task._id !== action.payload.id ? task : action.payload;
             });
         case DELETE_TASK:
-            return tasks.filter(task => task.id !== action.payload);
+            return tasks.filter(task => task._id !== action.payload);
 
         default:
             return tasks;

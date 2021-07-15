@@ -91,8 +91,8 @@ class TaskList extends Component {
             !fetching &&
             tasks.map(task => (
                 <Task
-                    key={task.id}
-                    id={task.id}
+                    key={task._id}
+                    id={task._id}
                     name={task.name}
                     completed={task.completed}
                     updateTask={this.handleUpdateTask}
