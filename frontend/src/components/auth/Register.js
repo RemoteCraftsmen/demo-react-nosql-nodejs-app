@@ -26,7 +26,8 @@ const styles = theme => ({
         marginTop: '20px'
     },
     button: {
-        marginTop: '25px'
+        marginTop: '25px',
+        width: '90px'
     }
 });
 
@@ -44,13 +45,7 @@ class Register extends Component {
     doRegister = event => {
         event.preventDefault();
 
-        const data = {
-            email: this.state.email,
-            password: this.state.password,
-            passwordConfirmation: this.state.passwordConfirmation
-        };
-
-        this.props.registerUser(data, this.props.history);
+        this.props.registerUser(...this.state, this.props.history);
     };
 
     handleChange = name => event => {
