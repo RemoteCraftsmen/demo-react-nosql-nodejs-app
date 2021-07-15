@@ -4,7 +4,7 @@ import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from './types';
 
 export const fetchTasks = () => async dispatch => {
     try {
-        const tasks = await axios.get('/api/tasks');
+        const { data: tasks } = await axios.get('/tasks');
 
         dispatch({
             type: SET_TASKS,
@@ -17,7 +17,7 @@ export const fetchTasks = () => async dispatch => {
 
 export const addTask = name => async dispatch => {
     try {
-        const newTask = await axios.post('/api/tasks', { name });
+        const { data: newTask } = await axios.post('/tasks', { name });
 
         dispatch({
             type: ADD_TASK,
@@ -30,7 +30,7 @@ export const addTask = name => async dispatch => {
 
 export const updateTask = task => async dispatch => {
     try {
-        const updatedTask = await axios.put('/api/tasks/' + task.id, { ...task });
+        const { data: updatedTask } = await axios.put('/tasks/' + task.id, { ...task });
 
         dispatch({
             type: UPDATE_TASK,
@@ -43,7 +43,7 @@ export const updateTask = task => async dispatch => {
 
 export const deleteTask = id => async dispatch => {
     try {
-        await axios.delete('/api/tasks/' + id);
+        await axios.delete('/tasks/' + id);
 
         dispatch({
             type: DELETE_TASK,
