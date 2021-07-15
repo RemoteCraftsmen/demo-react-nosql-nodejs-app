@@ -1,6 +1,5 @@
 class LogoutController {
-    constructor(userService, httpStatusCodes) {
-        this.userService = userService;
+    constructor(httpStatusCodes) {
         this.httpStatusCodes = httpStatusCodes;
     }
 

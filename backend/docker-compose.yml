@@ -10,8 +10,7 @@ services:
         env_file:
             - ./.env
         ports:
-            - 127.0.0.1:5986:5986
-            - 127.0.0.1:5984:5984
+            - 127.0.0.1:${COUCHDB_PORT}:${COUCHDB_PORT}
         networks:
             - global
 
@@ -25,7 +24,7 @@ services:
             - '-c'
             - 'docker-entrypoint.sh --requirepass "$$REDIS_PASSWORD"'
         ports:
-            - 127.0.0.1:${REDIS_PORT}:6379
+            - 127.0.0.1:${REDIS_PORT}:${REDIS_PORT}
         networks:
             - global
 

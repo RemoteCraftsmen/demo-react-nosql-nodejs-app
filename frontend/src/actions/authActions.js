@@ -4,7 +4,7 @@ import { SET_USER, LOGOUT_USER } from './types';
 
 export const registerUser = (data, history) => async dispatch => {
     try {
-        await axios.post('/api/auth/register', data);
+        await axios.post('/auth/register', data);
 
         const { email, password } = data;
 
@@ -16,8 +16,7 @@ export const registerUser = (data, history) => async dispatch => {
 
 export const loginUser = (data, history) => async dispatch => {
     try {
-        const response = await axios.post('/api/auth/login', data);
-        const user = response.data;
+        const { data: user } = await axios.post('/auth/login', data);
 
         setUser(user, dispatch);
 
@@ -29,7 +28,7 @@ export const loginUser = (data, history) => async dispatch => {
 
 export const logoutUser = history => async dispatch => {
     try {
-        await axios.post('/api/auth/logout');
+        await axios.post('/auth/logout');
 
         dispatch({
             type: LOGOUT_USER
