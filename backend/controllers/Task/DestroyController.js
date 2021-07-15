@@ -13,11 +13,11 @@ class DestroyController {
             return res.sendStatus(this.httpStatusCodes.NO_CONTENT);
         }
 
-        if (task.user_id !== req.session.user.id) {
+        if (task.userId !== req.session.user._id) {
             return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
-        await task.destroy();
+        await this.taskService.destroy(task._id, task._rev);
 
         return res.sendStatus(this.httpStatusCodes.NO_CONTENT);
     }

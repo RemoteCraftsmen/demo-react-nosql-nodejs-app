@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Card, Button, Checkbox, TextField } from '@material-ui/core';
-import axios from 'axios';
 
 class Task extends Component {
     constructor(props) {
@@ -10,22 +9,10 @@ class Task extends Component {
             task: {
                 id: props.id,
                 name: props.name,
-                completed: props.completed
+                completed: props.completed === 'true'
             }
         };
     }
-
-    updateItem = async () => {
-        const { task } = this.state;
-
-        await axios.patch(
-            process.env.REACT_APP_API_URL + '/api/tasks/' + task.id,
-            { ...task },
-            { withCredentials: true }
-        );
-
-        this.props.addNotification('Task updated', 'success');
-    };
 
     handleChange = event => {
         let { name, type, value, checked } = event.target;
@@ -48,38 +35,44 @@ class Task extends Component {
             },
             () => {
                 if (isCheckbox) {
-                    this.updateItem();
+                    this.props.updateTask(this.state.task);
                 }
             }
         );
     };
 
     render() {
+        const {
+            task: { id, name, completed },
+            task
+        } = this.state;
+
         return (
             <Card className="todo-item">
-                <Checkbox
-                    name="completed"
-                    checked={this.state.task.completed}
-                    color="secondary"
-                    onChange={this.handleChange}
-                    style={{ marginRight: 25 }}
-                />
+                <div className="input-and-checkox">
+                    <Checkbox
+                        name="completed"
+                        checked={completed}
+                        color="secondary"
+                        onChange={this.handleChange}
+                        style={{ marginRight: 25 }}
+                    />
 
-                <TextField
-                    name="name"
-                    label="Name"
-                    value={this.state.task.name}
-                    onChange={this.handleChange}
-                    style={{ flexGrow: 1, marginRight: 25 }}
-                />
+                    <TextField
+                        name="name"
+                        label="Name"
+                        value={name}
+                        onChange={this.handleChange}
+                        style={{ flexGrow: 1, marginRight: 25 }}
+                    />
+                </div>
 
-                <div>
+                <div className="crud-buttons">
                     <Button
                         variant="contained"
                         color="primary"
                         className="save-todo-item"
-                        onClick={this.updateItem}
-                        style={{ marginRight: '15px' }}
+                        onClick={() => this.props.updateTask(task)}
                     >
                         Save
                     </Button>
@@ -88,7 +81,7 @@ class Task extends Component {
                         variant="contained"
                         color="secondary"
                         className="save-todo-item"
-                        onClick={() => this.props.removeItem(this.state.task.id)}
+                        onClick={() => this.props.deleteTask(id)}
                     >
                         Remove
                     </Button>

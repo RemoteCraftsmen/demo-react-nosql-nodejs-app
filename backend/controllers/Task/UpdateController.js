@@ -14,13 +14,17 @@ class UpdateController {
             return res.sendStatus(this.httpStatusCodes.NOT_FOUND);
         }
 
-        if (task.user_id !== req.session.user.id) {
+        if (task.userId !== req.session.user._id) {
             return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
-        await this.task.update({ name, completed });
+        await this.taskService.update({
+            ...task,
+            name,
+            completed
+        });
 
-        const updatedTask = await this.taskService.findById(task.id);
+        const updatedTask = await this.taskService.findById(id);
 
         return res.send(updatedTask);
     }

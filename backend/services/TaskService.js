@@ -1,7 +1,7 @@
-const BaseModelService = require('./baseModelService');
+const BaseModelService = require('./BaseModelService');
 
 class TaskService extends BaseModelService {
-    static get table() {
+    get table() {
         return 'tasks';
     }
 }

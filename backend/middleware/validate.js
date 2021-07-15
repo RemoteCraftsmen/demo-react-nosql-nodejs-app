@@ -1,4 +1,4 @@
-const { StatusCodes } = require('http-status-codes');
+const StatusCodes = require('http-status-codes');
 const { matchedData, validationResult } = require('express-validator');
 
 module.exports = (req, res, next) => {

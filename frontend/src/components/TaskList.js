@@ -2,29 +2,29 @@ import React, { Component } from 'react';
 import AddItem from './AddItem';
 import Task from './Task';
 import { Typography } from '@material-ui/core';
-import axios from 'axios';
 import Notification from './Notification';
 import Unauthorized from './Unauthorized';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchTasks, addTask, updateTask, deleteTask } from '../actions/taskActions';
 
-export default class TaskList extends Component {
+class TaskList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isLoggedIn: true,
-            tasks: [],
-            notifications: []
+            notifications: [],
+            fetching: true
         };
     }
 
     componentDidMount = async () => {
-        let response;
-
         try {
-            response = await axios.get(process.env.REACT_APP_API_URL + '/api/tasks', { withCredentials: true });
+            await this.props.fetchTasks();
 
             this.setState({
-                tasks: response.data.tasks
+                fetching: false
             });
         } catch (error) {
             console.error(error);
@@ -32,23 +32,9 @@ export default class TaskList extends Component {
         }
     };
 
-    handleAddItem = async name => {
-        let response;
-
+    handleAddTask = async name => {
         try {
-            response = await axios.post(
-                process.env.REACT_APP_API_URL + '/api/tasks',
-                { name },
-                { withCredentials: true }
-            );
-
-            const task = response.data;
-
-            this.setState(state => {
-                return {
-                    tasks: [...state.tasks, task]
-                };
-            });
+            await this.props.addTask(name);
 
             this.addNotification('Task added', 'info');
         } catch (error) {
@@ -57,18 +43,26 @@ export default class TaskList extends Component {
         }
     };
 
-    removeItem = async id => {
-        await axios.delete(process.env.REACT_APP_API_URL + '/api/tasks/' + id, { withCredentials: true });
+    handleUpdateTask = async task => {
+        try {
+            await this.props.updateTask(task);
 
-        this.setState(state => {
-            const tasks = state.tasks.filter(task => task.id !== id);
+            this.addNotification('Task updated', 'info');
+        } catch (error) {
+            console.error(error);
+            this.setState({ isLoggedIn: false });
+        }
+    };
 
-            return {
-                tasks
-            };
-        });
+    handleDeleteTask = async id => {
+        try {
+            await this.props.deleteTask(id);
 
-        this.addNotification('Task removed', 'error');
+            this.addNotification('Task removed', 'error');
+        } catch (error) {
+            console.error(error);
+            this.setState({ isLoggedIn: false });
+        }
     };
 
     closeNotification = async ts => {
@@ -90,18 +84,24 @@ export default class TaskList extends Component {
     };
 
     render() {
-        const tasks = this.state.tasks.map(task => (
-            <Task
-                key={task.id}
-                id={task.id}
-                name={task.name}
-                completed={task.completed}
-                removeItem={this.removeItem}
-                addNotification={this.addNotification}
-            />
-        ));
+        const { fetching, notifications, isLoggedIn } = this.state;
+        const { tasks } = this.props;
 
-        const notifications = this.state.notifications.map(notification => (
+        const tasksList =
+            !fetching &&
+            tasks.map(task => (
+                <Task
+                    key={task.id}
+                    id={task.id}
+                    name={task.name}
+                    completed={task.completed}
+                    updateTask={this.handleUpdateTask}
+                    deleteTask={this.handleDeleteTask}
+                    addNotification={this.addNotification}
+                />
+            ));
+
+        const notificationsComponents = notifications.map(notification => (
             <Notification
                 key={notification.ts}
                 variant={notification.variant}
@@ -113,7 +113,7 @@ export default class TaskList extends Component {
 
         return (
             <div>
-                {this.state.isLoggedIn ? (
+                {isLoggedIn ? (
                     <div>
                         <Typography
                             component="h1"
@@ -124,10 +124,10 @@ export default class TaskList extends Component {
                             Tasks
                         </Typography>
 
-                        <AddItem onClick={this.handleAddItem} />
+                        <AddItem onClick={this.handleAddTask} />
 
-                        {tasks.length > 0 ? (
-                            tasks
+                        {tasksList.length ? (
+                            tasksList
                         ) : (
                             <Typography
                                 component="h2"
@@ -139,7 +139,7 @@ export default class TaskList extends Component {
                             </Typography>
                         )}
 
-                        {notifications}
+                        {notificationsComponents}
                     </div>
                 ) : (
                     <Unauthorized />
@@ -148,3 +148,17 @@ export default class TaskList extends Component {
         );
     }
 }
+
+TaskList.propTypes = {
+    tasks: PropTypes.array.isRequired,
+    fetchTasks: PropTypes.func.isRequired,
+    addTask: PropTypes.func.isRequired,
+    updateTask: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+    tasks: state.tasks
+});
+
+export default connect(mapStateToProps, { fetchTasks, addTask, updateTask, deleteTask })(TaskList);

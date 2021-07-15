@@ -1,4 +1,4 @@
-const BaseModelService = require('./baseModelService');
+const BaseModelService = require('./BaseModelService');
 
 class UserService extends BaseModelService {
     constructor(bcryptjs) {
@@ -6,22 +6,22 @@ class UserService extends BaseModelService {
         this.bcryptjs = bcryptjs;
     }
 
-    static get table() {
+    get table() {
         return 'users';
     }
 
-    static register(email, password) {
+    register(email, password) {
         const salt = this.bcryptjs.genSaltSync(10);
         const encryptedPassword = this.bcryptjs.hashSync(password, salt);
 
         return this.create({
             email,
             password: encryptedPassword,
-            created_at: Date.now()
+            createdAt: Date.now()
         });
     }
 
-    static async login(email, password) {
+    async login(email, password) {
         const user = await this.findOne({ email });
 
         if (!user) {
@@ -29,10 +29,20 @@ class UserService extends BaseModelService {
         }
 
         if (this.bcryptjs.compareSync(password, user.password)) {
-            return this.findOne({ email });
+            return this.getById(user.id);
         }
 
         return null;
+    }
+
+    async getById(id, excludePassword = true) {
+        const result = await this.couch.get(this.table, id);
+
+        if (excludePassword) {
+            delete result?.data?.password;
+        }
+
+        return result.data;
     }
 }
 

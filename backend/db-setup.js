@@ -15,7 +15,7 @@ const nano = require('nano')(url);
         users: {
             indexes: [
                 {
-                    index: { fields: ['created_at'] },
+                    index: { fields: ['createdAt'] },
                     name: 'created-at-index'
                 }
             ]
@@ -23,7 +23,7 @@ const nano = require('nano')(url);
         tasks: {
             indexes: [
                 {
-                    index: { fields: ['user_id'] },
+                    index: { fields: ['userId'] },
                     name: 'user-id-index'
                 }
             ]
