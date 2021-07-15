@@ -7,13 +7,13 @@ const initialState = {
     user
 };
 
-export default (state = initialState, action) => {
-    switch (action.type) {
+export default (state = initialState, { type, user }) => {
+    switch (type) {
         case SET_USER:
             return {
                 ...state,
-                isAuthenticated: !!action.payload,
-                user: action.payload
+                isAuthenticated: !!user,
+                user
             };
 
         case LOGOUT_USER:
