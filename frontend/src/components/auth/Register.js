@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { registerUser } from '../../actions/authActions';
+import { registerUser } from '../../store/actions/authActions';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -45,7 +45,7 @@ class Register extends Component {
     doRegister = event => {
         event.preventDefault();
 
-        this.props.registerUser(...this.state, this.props.history);
+        this.props.registerUser(this.state, this.props.history);
     };
 
     handleChange = name => event => {

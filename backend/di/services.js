@@ -14,6 +14,14 @@ module.exports = {
             class: 'services/TaskService',
             arguments: ['%bcryptjs']
         },
+        loginHandler: {
+            class: 'services/Auth/LoginHandler',
+            arguments: ['@userService', '%bcryptjs']
+        },
+        registerHandler: {
+            class: 'services/Auth/RegisterHandler',
+            arguments: ['@userService', '%bcryptjs']
+        },
         redisSessionClient: {
             arguments: ['%redis', '%config.redisSession%'],
             factory: {

@@ -6,7 +6,7 @@ import Notification from './Notification';
 import Unauthorized from './Unauthorized';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchTasks, addTask, updateTask, deleteTask } from '../actions/taskActions';
+import { fetchTasks, addTask, updateTask, deleteTask } from '../store/actions/taskActions';
 
 class TaskList extends Component {
     constructor(props) {
@@ -158,7 +158,7 @@ TaskList.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    tasks: state.tasks
+    tasks: state.tasks.tasks
 });
 
 export default connect(mapStateToProps, { fetchTasks, addTask, updateTask, deleteTask })(TaskList);
