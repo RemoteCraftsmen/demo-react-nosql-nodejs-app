@@ -1,4 +1,4 @@
-import axios from '../plugins/axios';
+import axios from '../../plugins/axios';
 
 import { SET_USER, LOGOUT_USER } from './types';
 
@@ -45,7 +45,7 @@ export const logoutUser = history => async dispatch => {
 const setUser = (user, dispatch) => {
     dispatch({
         type: SET_USER,
-        payload: user
+        user
     });
 
     localStorage['user'] = JSON.stringify(user);
