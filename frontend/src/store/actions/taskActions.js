@@ -1,4 +1,4 @@
-import axios from '../plugins/axios';
+import axios from '../../plugins/axios';
 
 import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from './types';
 
@@ -8,7 +8,7 @@ export const fetchTasks = () => async dispatch => {
 
         dispatch({
             type: SET_TASKS,
-            payload: tasks
+            tasks
         });
     } catch (error) {
         console.error(error);
@@ -21,7 +21,7 @@ export const addTask = name => async dispatch => {
 
         dispatch({
             type: ADD_TASK,
-            payload: newTask
+            newTask
         });
     } catch (error) {
         console.error(error);
@@ -34,20 +34,20 @@ export const updateTask = task => async dispatch => {
 
         dispatch({
             type: UPDATE_TASK,
-            payload: updatedTask
+            updatedTask
         });
     } catch (error) {
         console.error(error);
     }
 };
 
-export const deleteTask = id => async dispatch => {
+export const deleteTask = taskId => async dispatch => {
     try {
-        await axios.delete('/tasks/' + id);
+        await axios.delete('/tasks/' + taskId);
 
         dispatch({
             type: DELETE_TASK,
-            payload: id
+            taskId
         });
     } catch (error) {
         console.error(error);
