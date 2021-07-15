@@ -15,12 +15,14 @@ export default (state = initialState, action) => {
                 isAuthenticated: !!action.payload,
                 user: action.payload
             };
+
         case LOGOUT_USER:
             return {
                 ...state,
                 isAuthenticated: false,
                 user: null
             };
+
         default:
             return state;
     }
