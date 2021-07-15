@@ -29,7 +29,7 @@ class UserService extends BaseModelService {
         }
 
         if (this.bcryptjs.compareSync(password, user.password)) {
-            return this.getById(user.id);
+            return this.getById(user._id);
         }
 
         return null;

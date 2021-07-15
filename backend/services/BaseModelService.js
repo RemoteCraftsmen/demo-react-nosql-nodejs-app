@@ -25,24 +25,12 @@ class BaseModelService {
     async findAll(where, options = {}) {
         const result = await this.couch.mango(this.table, { selector: { ...where }, ...options });
 
-        const items = result.data.docs.map(item => {
-            item.id = item._id;
-
-            delete item._id;
-
-            return item;
-        });
-
-        return items;
+        return result.data.docs.map(item => item);
     }
 
     async create(data) {
         const result = await this.couch.insert(this.table, data);
         const row = await this.findById(result.data.id);
-
-        if (row.hasOwnProperty('_id')) {
-            row.id = row._id;
-        }
 
         return row;
     }
