@@ -29,20 +29,20 @@ class UserService extends BaseModelService {
         }
 
         if (this.bcryptjs.compareSync(password, user.password)) {
-            return this.getById(user.id);
+            return this.getById(user._id);
         }
 
         return null;
     }
 
     async getById(id, excludePassword = true) {
-        const result = await this.couch.get(this.table, id);
+        const { data } = await this.couch.get(this.table, id);
 
         if (excludePassword) {
-            delete result?.data?.password;
+            delete data?.password;
         }
 
-        return result.data;
+        return data;
     }
 }
 

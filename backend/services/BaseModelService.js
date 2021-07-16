@@ -11,9 +11,9 @@ class BaseModelService {
     }
 
     async findById(id) {
-        const result = await this.couch.get(this.table, id);
+        const { data } = await this.couch.get(this.table, id);
 
-        return result.data;
+        return data;
     }
 
     async findOne(where, options = {}) {
@@ -23,34 +23,22 @@ class BaseModelService {
     }
 
     async findAll(where, options = {}) {
-        const result = await this.couch.mango(this.table, { selector: { ...where }, ...options });
+        const { data } = await this.couch.mango(this.table, { selector: { ...where }, ...options });
 
-        const items = result.data.docs.map(item => {
-            item.id = item._id;
-
-            delete item._id;
-
-            return item;
-        });
-
-        return items;
+        return data?.docs;
     }
 
     async create(data) {
         const result = await this.couch.insert(this.table, data);
         const row = await this.findById(result.data.id);
 
-        if (row.hasOwnProperty('_id')) {
-            row.id = row._id;
-        }
-
         return row;
     }
 
     async update(data) {
-        const result = await this.couch.update(this.table, data);
+        const { data: updatedData } = await this.couch.update(this.table, data);
 
-        return result.data;
+        return updatedData;
     }
 
     async delete(id, revision) {

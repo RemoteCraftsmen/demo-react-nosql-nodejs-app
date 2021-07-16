@@ -45,7 +45,7 @@ class Register extends Component {
     doRegister = event => {
         event.preventDefault();
 
-        this.props.registerUser(...this.state, this.props.history);
+        this.props.registerUser(this.state, this.props.history);
     };
 
     handleChange = name => event => {
