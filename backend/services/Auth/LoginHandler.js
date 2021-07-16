@@ -12,7 +12,7 @@ class LoginHandler {
         }
 
         if (this.bcryptjs.compareSync(password, user.password)) {
-            return this.userRepository.getById(user._id);
+            return this.userRepository.findById(user._id);
         }
 
         return null;

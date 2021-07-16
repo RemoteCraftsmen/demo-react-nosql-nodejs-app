@@ -10,7 +10,7 @@ class RegisterController {
 
         const user = await this.registerHandler.handle(email, password);
 
-        const registeredUser = await this.userRepository.getById(user._id);
+        const registeredUser = await this.userRepository.findById(user._id);
 
         req.session.user = registeredUser;
 
