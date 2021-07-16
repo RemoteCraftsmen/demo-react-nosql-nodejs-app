@@ -98,12 +98,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-    loginUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    loginUser: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-    auth: state.auth
-});
-
-export default connect(mapStateToProps, { loginUser })(withRouter(withStyles(styles)(Login)));
+export default connect(null, { loginUser })(withRouter(withStyles(styles)(Login)));

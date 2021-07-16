@@ -30,7 +30,7 @@ class SiteNavigation extends Component {
                     <Toolbar>
                         <Grid container className={classes.grow} spacing={Number(spacing)} justify="center">
                             <Grid item xs={12} sm={10} md={8}>
-                                {this.props.auth.isAuthenticated ? (
+                                {this.props.isAuthenticated ? (
                                     <div style={{ display: 'flex' }}>
                                         <Button>
                                             <Link className="navigation-link" to="/tasks">
@@ -71,11 +71,15 @@ class SiteNavigation extends Component {
 }
 
 SiteNavigation.propTypes = {
-    auth: PropTypes.object.isRequired
+    isAuthenticated: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => ({
-    auth: state.auth
-});
+const mapStateToProps = state => {
+    const { isAuthenticated } = state.authReducer;
+
+    return {
+        isAuthenticated
+    };
+};
 
 export default connect(mapStateToProps, null)(withRouter(withStyles(styles)(SiteNavigation)));
