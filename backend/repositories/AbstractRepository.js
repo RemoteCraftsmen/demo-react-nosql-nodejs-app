@@ -1,9 +1,6 @@
-const NodeCouchDb = require('node-couchdb');
-const config = require('../config');
-
-class BaseModelService {
-    constructor() {
-        this.couch = new NodeCouchDb({ ...config.db });
+class AbstractRepository {
+    constructor(couchDB) {
+        this.couchDB = couchDB;
     }
 
     async find(where, options = {}) {
@@ -11,7 +8,7 @@ class BaseModelService {
     }
 
     async findById(id) {
-        const { data } = await this.couch.get(this.table, id);
+        const { data } = await this.couchDB.get(this.table, id);
 
         return data;
     }
@@ -23,26 +20,26 @@ class BaseModelService {
     }
 
     async findAll(where, options = {}) {
-        const { data } = await this.couch.mango(this.table, { selector: { ...where }, ...options });
+        const { data } = await this.couchDB.mango(this.table, { selector: { ...where }, ...options });
 
         return data?.docs;
     }
 
     async create(data) {
-        const result = await this.couch.insert(this.table, data);
+        const result = await this.couchDB.insert(this.table, data);
         const row = await this.findById(result.data.id);
 
         return row;
     }
 
     async update(data) {
-        const { data: updatedData } = await this.couch.update(this.table, data);
+        const { data: updatedData } = await this.couchDB.update(this.table, data);
 
         return updatedData;
     }
 
     async delete(id, revision) {
-        const { data } = await this.couch.del(this.table, id, revision);
+        const { data } = await this.couchDB.del(this.table, id, revision);
 
         return data;
     }
@@ -52,4 +49,4 @@ class BaseModelService {
     }
 }
 
-module.exports = BaseModelService;
+module.exports = AbstractRepository;

@@ -10,7 +10,7 @@ module.exports = {
         },
         'controllers.auth.registerController': {
             class: 'controllers/Auth/RegisterController',
-            arguments: ['@registerHandler', '@userService', '%http-status-codes']
+            arguments: ['@registerHandler', '@repositories.user', '%http-status-codes']
         }
     }
 };
