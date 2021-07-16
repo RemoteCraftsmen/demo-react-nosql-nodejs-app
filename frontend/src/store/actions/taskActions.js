@@ -30,7 +30,7 @@ export const addTask = name => async dispatch => {
 
 export const updateTask = task => async dispatch => {
     try {
-        const { data: updatedTask } = await axios.put('/tasks/' + task.id, { ...task });
+        const { data: updatedTask } = await axios.put(`/tasks/${task.id}`, { ...task });
 
         dispatch({
             type: UPDATE_TASK,
@@ -43,7 +43,7 @@ export const updateTask = task => async dispatch => {
 
 export const deleteTask = taskId => async dispatch => {
     try {
-        await axios.delete('/tasks/' + taskId);
+        await axios.delete(`/tasks/${taskId}`);
 
         dispatch({
             type: DELETE_TASK,
