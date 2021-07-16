@@ -3,24 +3,17 @@ const config = require('../config');
 module.exports = {
     parameters: {
         config,
-        'config.redisSession': config.redisSession
+        'config.redisSession': config.redisSession,
+        'config.db': config.db
     },
     services: {
-        userService: {
-            class: 'services/UserService',
-            arguments: ['%bcryptjs']
-        },
-        taskService: {
-            class: 'services/TaskService',
-            arguments: ['%bcryptjs']
-        },
         loginHandler: {
             class: 'services/Auth/LoginHandler',
-            arguments: ['@userService', '%bcryptjs']
+            arguments: ['@repositories.user', '%bcryptjs']
         },
         registerHandler: {
             class: 'services/Auth/RegisterHandler',
-            arguments: ['@userService', '%bcryptjs']
+            arguments: ['@repositories.user', '%bcryptjs']
         },
         redisSessionClient: {
             arguments: ['%redis', '%config.redisSession%'],
@@ -33,6 +26,13 @@ module.exports = {
             arguments: ['@redisSessionClient'],
             factory: {
                 class: 'services/RedisStoreFactory',
+                method: 'create'
+            }
+        },
+        couchDB: {
+            arguments: ['%node-couchdb', '%config.db%'],
+            factory: {
+                class: 'services/CouchDBFactory',
                 method: 'create'
             }
         }
