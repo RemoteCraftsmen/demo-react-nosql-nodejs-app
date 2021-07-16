@@ -46,7 +46,6 @@ class Task extends Component {
             task: { id, name, completed },
             task
         } = this.state;
-        console.log('🚀 ~ file: Task.js ~ line 49 ~ Task ~ render ~ completed', completed);
 
         return (
             <Card className="todo-item">
