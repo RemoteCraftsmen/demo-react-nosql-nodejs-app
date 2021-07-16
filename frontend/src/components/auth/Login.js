@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { loginUser } from '../../store/actions/authActions';
+import { loginUser } from 'store/actions/authActions';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';

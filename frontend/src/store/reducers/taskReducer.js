@@ -1,10 +1,10 @@
-import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from '../actions/types';
+import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from 'store/actions/types';
 
 const initialState = {
     tasks: []
 };
 
-export default (state = initialState, action) => {
+const taskReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_TASKS:
             return {
@@ -32,3 +32,5 @@ export default (state = initialState, action) => {
             return state;
     }
 };
+
+export default taskReducer;

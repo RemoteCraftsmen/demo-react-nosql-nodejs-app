@@ -1,4 +1,4 @@
-import { SET_USER, LOGOUT_USER } from '../actions/types';
+import { SET_USER, LOGOUT_USER } from 'store/actions/types';
 
 const user = JSON.parse(localStorage.getItem('user')) || null;
 
@@ -7,7 +7,7 @@ const initialState = {
     user
 };
 
-export default (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER:
             return {
@@ -27,3 +27,5 @@ export default (state = initialState, action) => {
             return state;
     }
 };
+
+export default authReducer;
