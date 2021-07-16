@@ -4,28 +4,28 @@ const initialState = {
     tasks: []
 };
 
-export default (state = initialState, { type, tasks, newTask, updatedTask, taskId }) => {
-    switch (type) {
+export default (state = initialState, action) => {
+    switch (action.type) {
         case SET_TASKS:
             return {
-                tasks
+                tasks: action.tasks
             };
 
         case ADD_TASK:
             return {
-                tasks: [...state.tasks, newTask]
+                tasks: [...state.tasks, action.newTask]
             };
 
         case UPDATE_TASK:
             return {
                 tasks: state.tasks.map(task => {
-                    return task._id !== updatedTask._id ? task : updatedTask;
+                    return task._id !== action.updatedTask._id ? task : action.updatedTask;
                 })
             };
 
         case DELETE_TASK:
             return {
-                tasks: state.tasks.filter(task => task._id !== taskId)
+                tasks: state.tasks.filter(task => task._id !== action.taskId)
             };
 
         default:

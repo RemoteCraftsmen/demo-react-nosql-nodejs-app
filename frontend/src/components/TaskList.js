@@ -157,8 +157,12 @@ TaskList.propTypes = {
     deleteTask: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-    tasks: state.tasks.tasks
-});
+const mapStateToProps = state => {
+    const { tasks } = state.taskReducer;
+
+    return {
+        tasks
+    };
+};
 
 export default connect(mapStateToProps, { fetchTasks, addTask, updateTask, deleteTask })(TaskList);
