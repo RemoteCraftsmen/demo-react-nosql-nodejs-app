@@ -19,13 +19,13 @@ export default (state = initialState, { type, tasks, newTask, updatedTask, taskI
         case UPDATE_TASK:
             return {
                 tasks: state.tasks.map(task => {
-                    return task.id !== updatedTask.id ? task : updatedTask;
+                    return task._id !== updatedTask._id ? task : updatedTask;
                 })
             };
 
         case DELETE_TASK:
             return {
-                tasks: state.tasks.filter(task => task.id !== taskId)
+                tasks: state.tasks.filter(task => task._id !== taskId)
             };
 
         default:

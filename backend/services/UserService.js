@@ -12,7 +12,7 @@ class UserService extends BaseModelService {
             delete data?.password;
         }
 
-        return result?.data;
+        return data;
     }
 }
 

@@ -10,6 +10,7 @@ class StoreController {
         const task = await this.taskService.create({
             name,
             userId: req.session.user._id,
+            completed: false,
             createdAt: Date.now()
         });
 

@@ -9,7 +9,7 @@ class Task extends Component {
             task: {
                 id: props.id,
                 name: props.name,
-                completed: props.completed === 'true'
+                completed: props.completed
             }
         };
     }
@@ -46,6 +46,7 @@ class Task extends Component {
             task: { id, name, completed },
             task
         } = this.state;
+        console.log('🚀 ~ file: Task.js ~ line 49 ~ Task ~ render ~ completed', completed);
 
         return (
             <Card className="todo-item">
