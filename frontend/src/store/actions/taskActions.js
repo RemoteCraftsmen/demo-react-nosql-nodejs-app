@@ -1,4 +1,4 @@
-import axios from '../../plugins/axios';
+import axios from 'plugins/axios';
 
 import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from './types';
 

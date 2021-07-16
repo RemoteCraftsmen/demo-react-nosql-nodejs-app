@@ -1,4 +1,4 @@
-import axios from '../../plugins/axios';
+import axios from 'plugins/axios';
 
 import { SET_USER, LOGOUT_USER } from './types';
 
