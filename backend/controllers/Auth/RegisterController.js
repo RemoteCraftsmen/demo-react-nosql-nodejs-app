@@ -1,7 +1,7 @@
 class RegisterController {
-    constructor(registerHandler, userService, httpStatusCodes) {
+    constructor(registerHandler, userRepository, httpStatusCodes) {
         this.registerHandler = registerHandler;
-        this.userService = userService;
+        this.userRepository = userRepository;
         this.httpStatusCodes = httpStatusCodes;
     }
 
@@ -10,7 +10,7 @@ class RegisterController {
 
         const user = await this.registerHandler.handle(email, password);
 
-        const registeredUser = await this.userService.getById(user._id);
+        const registeredUser = await this.userRepository.getById(user._id);
 
         req.session.user = registeredUser;
 

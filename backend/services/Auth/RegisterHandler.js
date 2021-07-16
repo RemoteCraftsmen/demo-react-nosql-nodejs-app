@@ -1,6 +1,6 @@
 class RegisterHandler {
-    constructor(userService, bcryptjs) {
-        this.userService = userService;
+    constructor(userRepository, bcryptjs) {
+        this.userRepository = userRepository;
         this.bcryptjs = bcryptjs;
     }
 
@@ -8,7 +8,7 @@ class RegisterHandler {
         const salt = this.bcryptjs.genSaltSync(10);
         const encryptedPassword = this.bcryptjs.hashSync(password, salt);
 
-        return this.userService.create({
+        return this.userRepository.create({
             email,
             password: encryptedPassword,
             createdAt: Date.now()

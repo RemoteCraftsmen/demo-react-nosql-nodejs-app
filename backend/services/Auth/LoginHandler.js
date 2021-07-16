@@ -1,18 +1,18 @@
 class LoginHandler {
-    constructor(userService, bcryptjs) {
-        this.userService = userService;
+    constructor(userRepository, bcryptjs) {
+        this.userRepository = userRepository;
         this.bcryptjs = bcryptjs;
     }
 
     async handle(email, password) {
-        const user = await this.userService.findOne({ email });
+        const user = await this.userRepository.findByEmail(email);
 
         if (!user) {
             return null;
         }
 
         if (this.bcryptjs.compareSync(password, user.password)) {
-            return this.userService.getById(user._id);
+            return this.userRepository.getById(user._id);
         }
 
         return null;

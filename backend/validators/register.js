@@ -18,7 +18,7 @@ module.exports = [
 
             const userRepository = di.get('repositories.user');
 
-            const user = await userRepository.findOne({ email });
+            const user = await userRepository.findByEmail(email);
 
             if (user) {
                 throw new Error('Email taken');

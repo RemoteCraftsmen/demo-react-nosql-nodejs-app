@@ -14,6 +14,10 @@ class UserRepository extends AbstractRepository {
 
         return data;
     }
+
+    findByEmail(email) {
+        return this.findOne({ email });
+    }
 }
 
 module.exports = UserRepository;
