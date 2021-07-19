@@ -17,7 +17,7 @@
     "jest": {},
     "license": "MIT",
     "dependencies": {
-        "bcryptjs": "^2.4.3",
+        "bcryptjs": "2.4.3",
         "body-parser": "1.18.3",
         "connect-redis": "^3.4.1",
         "cookie-parser": "^1.4.4",
@@ -40,13 +40,13 @@
         "swagger-to-static": "1.0.3"
     },
     "devDependencies": {
-        "axios": "^0.18.0",
-        "babel-core": "^6.26.3",
-        "babel-jest": "^23.6.0",
-        "babel-preset-env": "^1.7.0",
-        "eslint": "^4.11.0",
-        "faker": "^4.1.0",
-        "jest": "^23.6.0",
-        "nodemon": "^2.0.10"
+        "axios": "0.18.0",
+        "babel-core": "6.26.3",
+        "babel-jest": "23.6.0",
+        "babel-preset-env": "1.7.0",
+        "eslint": "4.11.0",
+        "faker": "4.1.0",
+        "jest": "23.6.0",
+        "nodemon": "2.0.10"
     }
 }
