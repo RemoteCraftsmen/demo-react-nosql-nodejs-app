@@ -1,4 +1,4 @@
-import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from '../actions/types';
+import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from '@/actions/types';
 
 const initialTasks = [];
 
