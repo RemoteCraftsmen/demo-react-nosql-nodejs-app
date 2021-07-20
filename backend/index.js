@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
 const errorHandler = require('./plugins/errorHandler');
@@ -16,5 +17,7 @@ require('./plugins/session')(app);
 require('./plugins/bodyParser')(app);
 
 app.use('/api', router);
+
+app.use('/swagger-doc', express.static(path.join(__dirname, '/public/swagger')));
 
 module.exports = app;

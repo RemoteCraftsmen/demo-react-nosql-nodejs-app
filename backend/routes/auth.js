@@ -11,6 +11,7 @@ module.exports = di => {
     const registerController = di.get('controllers.auth.registerController');
     const logoutController = di.get('controllers.auth.logoutController');
 
+    router.get('/token', (req, res) => res.sendStatus(204));
     router.post('/login', [loginValidator, validate], (...args) => loginController.invoke(...args));
     router.post('/register', [registerValidator, validate], (...args) => registerController.invoke(...args));
     router.post('/logout', (...args) => logoutController.invoke(...args));

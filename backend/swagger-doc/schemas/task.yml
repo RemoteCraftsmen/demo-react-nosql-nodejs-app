@@ -1,0 +1,19 @@
+components:
+    schemas:
+        Task:
+            type: object
+            properties:
+                _id:
+                    type: string
+                    description: UUID of each task
+                userId:
+                    type: string
+                    description: UUID of user
+                name:
+                    type: string
+                    description: Name
+                createdAt:
+                    type: string
+                    description: Creation date
+            xml:
+                name: Task

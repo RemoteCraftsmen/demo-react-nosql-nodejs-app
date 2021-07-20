@@ -1,0 +1,96 @@
+paths:
+    /auth/token:
+        get:
+            tags:
+                - Auth
+            description: Returns CSRF Token
+            responses:
+                204:
+                    description: Successful with no content
+
+    /auth/login:
+        post:
+            tags:
+                - Auth
+            description: Login
+            requestBody:
+                description: Credentials
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - email
+                                - password
+                            properties:
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+            responses:
+                200:
+                    description: Login successful. The session ID is returned in a cookie named `connect.sid`.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                allOf:
+                                    - $ref: '#/components/schemas/User'
+                    headers:
+                        Set-Cookie:
+                            schema:
+                                type: string
+                                example: connect.sid=abcde12345; Path=/; HttpOnly
+                400:
+                    $ref: '#/components/responses/BadRequestError'
+                401:
+                    description: Wrong credentials
+
+    /auth/register:
+        post:
+            tags:
+                - Auth
+            description: Register
+            requestBody:
+                description: Credentials
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - email
+                                - password
+                                - passwordConfirmation
+                            properties:
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+                                passwordConfirmation:
+                                    type: string
+            responses:
+                200:
+                    description: Register successful.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                allOf:
+                                    - $ref: '#/components/schemas/User'
+                400:
+                    $ref: '#/components/responses/BadRequestError'
+
+    /auth/logout:
+        post:
+            security:
+                - cookieAuth: []
+            tags:
+                - Auth
+            description: Logout
+            responses:
+                204:
+                    description: Logout successful
+                401:
+                    $ref: '#/components/responses/UnauthorizedError'
