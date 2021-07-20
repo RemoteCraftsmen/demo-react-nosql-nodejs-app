@@ -8,7 +8,7 @@ module.exports = {
         title: 'NOSQL-NODEJS API',
         version: '1.0.0',
         description:
-            'API documentation for DEMO-NOSQL-NODEJS App \n\n First make request to /auth/token in order to get a valid CSRF Token from the server'
+            'API documentation for DEMO-NOSQL-NODEJS App \n\n Get sessionID from cookies by logging into app to make authorized requests'
     },
     servers: [
         {
