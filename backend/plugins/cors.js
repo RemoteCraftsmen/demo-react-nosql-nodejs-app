@@ -1,12 +1,10 @@
 const cors = require('cors');
-const {
-    app: { corsSites, frontendUrl }
-} = require('../config');
+const config = require('../config');
 
 module.exports = app => {
-    const corsAllowedSites = corsSites.map(site => site.url.trim());
+    const corsSites = config.app.corsSites ? config.app.corsSites.split(',').map(site => site.trim()) : [];
 
-    const originsWhitelist = [frontendUrl, ...corsAllowedSites];
+    const originsWhitelist = [config.app.frontendUrl, ...corsSites];
 
     const corsOptions = {
         origin(origin, callback) {
