@@ -3,7 +3,7 @@ class AbstractRepository {
         this.couchDB = couchDB;
     }
 
-    async find(where, options = {}) {
+    find(where, options = {}) {
         return typeof where === 'object' ? this.findOne(where, options) : this.findById(where, options);
     }
 
@@ -14,9 +14,9 @@ class AbstractRepository {
     }
 
     async findOne(where, options = {}) {
-        const items = await this.findAll(where, options);
+        const [item] = await this.findAll(where, options);
 
-        return items[0];
+        return item;
     }
 
     async findAll(where, options = {}) {
@@ -44,7 +44,7 @@ class AbstractRepository {
         return data;
     }
 
-    async destroy(id, revision) {
+    destroy(id, revision) {
         return this.delete(id, revision);
     }
 }
