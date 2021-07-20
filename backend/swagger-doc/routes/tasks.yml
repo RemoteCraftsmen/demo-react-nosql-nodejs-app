@@ -39,13 +39,13 @@ paths:
                                     type: string
             responses:
                 201:
-                    description: Contract created
+                    description: Task created
                     content:
                         application/json:
                             schema:
                                 type: object
                                 allOf:
-                                    - $ref: '#/components/schemas/Contract'
+                                    - $ref: '#/components/schemas/Task'
                 400:
                     $ref: '#/components/responses/BadRequestError'
                 401:

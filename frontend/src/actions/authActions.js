@@ -44,7 +44,6 @@ export const logoutUser = history => async dispatch => {
 };
 
 const setUser = (user, dispatch) => {
-    console.log('🚀 ~ file: authActions.js ~ line 47 ~ setUser ~ user', user);
     dispatch({
         type: SET_USER,
         payload: user

@@ -1,13 +1,4 @@
 paths:
-    /auth/token:
-        get:
-            tags:
-                - Auth
-            description: Returns CSRF Token
-            responses:
-                204:
-                    description: Successful with no content
-
     /auth/login:
         post:
             tags:
@@ -92,5 +83,3 @@ paths:
             responses:
                 204:
                     description: Logout successful
-                401:
-                    $ref: '#/components/responses/UnauthorizedError'
