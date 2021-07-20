@@ -1,0 +1,122 @@
+paths:
+    /tasks:
+        get:
+            security:
+                - cookieAuth: []
+            tags:
+                - Tasks
+            description: List of Tasks
+            responses:
+                200:
+                    description: Successful
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Task'
+                400:
+                    $ref: '#/components/responses/BadRequestError'
+                401:
+                    $ref: '#/components/responses/UnauthorizedError'
+        post:
+            security:
+                - cookieAuth: []
+            tags:
+                - Tasks
+            description: Create new task
+            requestBody:
+                description: New task data
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - name
+                            properties:
+                                name:
+                                    type: string
+            responses:
+                201:
+                    description: Task created
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                allOf:
+                                    - $ref: '#/components/schemas/Task'
+                400:
+                    $ref: '#/components/responses/BadRequestError'
+                401:
+                    $ref: '#/components/responses/UnauthorizedError'
+                403:
+                    $ref: '#/components/responses/ForbiddenError'
+    /tasks/{id}:
+        put:
+            security:
+                - cookieAuth: []
+            tags:
+                - Tasks
+            description: Update specific task
+            parameters:
+                - name: id
+                  in: path
+                  description: UUID of the task
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                description: Updated data
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - id
+                                - completed
+                            properties:
+                                id:
+                                    type: string
+                                name:
+                                    type: string
+                                completed:
+                                    type: string
+            responses:
+                200:
+                    description: Returns updated task
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                allOf:
+                                    - $ref: '#/components/schemas/Task'
+                400:
+                    $ref: '#/components/responses/BadRequestError'
+                401:
+                    $ref: '#/components/responses/UnauthorizedError'
+                403:
+                    $ref: '#/components/responses/ForbiddenError'
+                404:
+                    description: Not Found
+        delete:
+            security:
+                - cookieAuth: []
+            tags:
+                - Tasks
+            description: Delete specific task
+            parameters:
+                - name: id
+                  in: path
+                  description: UUID of the task
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    description: Operation successful
+                401:
+                    $ref: '#/components/responses/UnauthorizedError'
+                403:
+                    $ref: '#/components/responses/ForbiddenError'

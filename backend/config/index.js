@@ -9,7 +9,8 @@ const config = {
         host: env('APP_HOST', '127.0.0.1'),
         secret: env('APP_SECRET'),
         frontendUrl: env('APP_FRONTEND_URL'),
-        jsonRequestSizeLimit: env('APP_JSON_REQUEST_SIZE_LIMIT', '1mb')
+        jsonRequestSizeLimit: env('APP_JSON_REQUEST_SIZE_LIMIT', '1mb'),
+        corsSites: [{ url: env('APP_HOST') }]
     },
     db: {
         host: env('COUCHDB_HOST'),
