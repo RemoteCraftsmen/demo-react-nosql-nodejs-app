@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import { logoutUser } from '../actions/authActions';
+import { logoutUser } from '@/store/actions/authActions';
 
 const styles = theme => ({
     grow: {
@@ -70,7 +70,6 @@ class SiteNavigation extends Component {
 }
 
 SiteNavigation.propTypes = {
-    auth: PropTypes.object.isRequired,
     logoutUser: PropTypes.func.isRequired
 };
 
