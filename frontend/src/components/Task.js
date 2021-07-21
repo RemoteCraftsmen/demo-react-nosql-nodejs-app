@@ -9,7 +9,7 @@ class Task extends Component {
             task: {
                 id: props.id,
                 name: props.name,
-                completed: props.completed === 'true'
+                completed: props.completed
             }
         };
     }

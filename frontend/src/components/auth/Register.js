@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { registerUser } from '../../actions/authActions';
+import { registerUser } from 'store/actions/authActions';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -107,12 +107,7 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-    registerUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    registerUser: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-    auth: state.auth
-});
-
-export default connect(mapStateToProps, { registerUser })(withRouter(withStyles(styles)(Register)));
+export default connect(null, { registerUser })(withRouter(withStyles(styles)(Register)));

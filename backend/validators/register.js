@@ -16,9 +16,9 @@ module.exports = [
         .custom(async (email, { req }) => {
             const di = req.app.get('di');
 
-            const userService = di.get('userService');
+            const userRepository = di.get('repositories.user');
 
-            const user = await userService.findOne({ email });
+            const user = await userRepository.findByEmail(email);
 
             if (user) {
                 throw new Error('Email taken');

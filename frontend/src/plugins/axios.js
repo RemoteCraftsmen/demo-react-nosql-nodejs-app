@@ -1,9 +1,7 @@
-import globalAxios from 'axios';
-import config from '../config';
+import axios from 'axios';
+import config from 'config';
 
-const axios = globalAxios.create({
-    baseURL: config.apiUrl,
-    withCredentials: true
-});
+axios.defaults.baseURL = config.apiUrl;
+axios.defaults.withCredentials = true;
 
 export default axios;

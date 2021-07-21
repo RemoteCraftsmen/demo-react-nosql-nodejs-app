@@ -1,13 +1,13 @@
 class LoginController {
-    constructor(userService, httpStatusCodes) {
-        this.userService = userService;
+    constructor(loginHandler, httpStatusCodes) {
+        this.loginHandler = loginHandler;
         this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
         const { email, password } = req.body;
 
-        const user = await this.userService.login(email, password);
+        const user = await this.loginHandler.handle(email, password);
 
         if (!user) {
             return res.sendStatus(this.httpStatusCodes.UNAUTHORIZED);

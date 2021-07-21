@@ -1,14 +1,14 @@
-import axios from '../plugins/axios';
+import axios from 'plugins/axios';
 
 import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from './types';
 
 export const fetchTasks = () => async dispatch => {
     try {
-        const tasks = await axios.get('/api/tasks');
+        const { data: tasks } = await axios.get('/tasks');
 
         dispatch({
             type: SET_TASKS,
-            payload: tasks
+            tasks
         });
     } catch (error) {
         console.error(error);
@@ -17,11 +17,11 @@ export const fetchTasks = () => async dispatch => {
 
 export const addTask = name => async dispatch => {
     try {
-        const newTask = await axios.post('/api/tasks', { name });
+        const { data: newTask } = await axios.post('/tasks', { name });
 
         dispatch({
             type: ADD_TASK,
-            payload: newTask
+            newTask
         });
     } catch (error) {
         console.error(error);
@@ -30,24 +30,24 @@ export const addTask = name => async dispatch => {
 
 export const updateTask = task => async dispatch => {
     try {
-        const updatedTask = await axios.put('/api/tasks/' + task.id, { ...task });
+        const { data: updatedTask } = await axios.put(`/tasks/${task.id}`, { ...task });
 
         dispatch({
             type: UPDATE_TASK,
-            payload: updatedTask
+            updatedTask
         });
     } catch (error) {
         console.error(error);
     }
 };
 
-export const deleteTask = id => async dispatch => {
+export const deleteTask = taskId => async dispatch => {
     try {
-        await axios.delete('/api/tasks/' + id);
+        await axios.delete(`/tasks/${taskId}`);
 
         dispatch({
             type: DELETE_TASK,
-            payload: id
+            taskId
         });
     } catch (error) {
         console.error(error);
