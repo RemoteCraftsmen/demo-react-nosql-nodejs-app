@@ -1,0 +1,13 @@
+components:
+    schemas:
+        ValidationError:
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Error content
+                params:
+                    type: string
+                    description: Field name
+            xml:
+                name: ValidationError

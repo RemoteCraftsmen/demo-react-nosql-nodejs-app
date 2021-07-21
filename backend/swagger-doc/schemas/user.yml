@@ -1,0 +1,16 @@
+components:
+    schemas:
+        User:
+            type: object
+            properties:
+                _id:
+                    type: string
+                    description: UUID of each user
+                email:
+                    type: string
+                    description: Email, unique
+                createdAt:
+                    type: string
+                    description: Creation date
+            xml:
+                name: User
