@@ -5,8 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import TaskList from './components/TaskList';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import NotFound from './components/NotFound';
 import SiteNavigation from './components/SiteNavigation';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
 
@@ -35,10 +36,13 @@ class App extends Component {
                     <div style={{ padding: 4 }}>
                         <Grid container className={classes.root} spacing={8} justify="center">
                             <Grid item xs={12} sm={10} md={8}>
-                                <Route exact path="/" component={Login} />
-                                <Route exact path="/login" component={Login} />
-                                <Route exact path="/register" component={Register} />
-                                <Route exact path="/tasks" component={TaskList} />
+                                <Switch>
+                                    <Route exact path="/" component={Login} />
+                                    <Route exact path="/login" component={Login} />
+                                    <Route exact path="/register" component={Register} />
+                                    <Route exact path="/tasks" component={TaskList} />
+                                    <Route component={NotFound} />
+                                </Switch>
                             </Grid>
                         </Grid>
                     </div>
@@ -52,9 +56,12 @@ class App extends Component {
                 <div style={{ padding: 4 }}>
                     <Grid container className={classes.root} spacing={8} justify="center">
                         <Grid item xs={12} sm={10} md={8}>
-                            <Route exact path="/" component={Login} />
-                            <Route exact path="/login" component={Login} />
-                            <Route exact path="/register" component={Register} />
+                            <Switch>
+                                <Route exact path="/" component={Login} />
+                                <Route exact path="/login" component={Login} />
+                                <Route exact path="/register" component={Register} />
+                                <Route component={NotFound} />
+                            </Switch>
                         </Grid>
                     </Grid>
                 </div>
