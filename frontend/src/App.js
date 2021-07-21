@@ -7,10 +7,8 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import SiteNavigation from './components/SiteNavigation';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 import './App.css';
-
-import store from './store';
 
 const styles = theme => ({
     root: {
@@ -28,10 +26,10 @@ class App extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, isAuthenticated } = this.props;
 
-        return (
-            <Provider store={store}>
+        if (isAuthenticated) {
+            return (
                 <Router>
                     <SiteNavigation />
                     <div style={{ padding: 4 }}>
@@ -45,13 +43,37 @@ class App extends Component {
                         </Grid>
                     </div>
                 </Router>
-            </Provider>
+            );
+        }
+
+        return (
+            <Router>
+                <SiteNavigation />
+                <div style={{ padding: 4 }}>
+                    <Grid container className={classes.root} spacing={8} justify="center">
+                        <Grid item xs={12} sm={10} md={8}>
+                            <Route exact path="/" component={Login} />
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/register" component={Register} />
+                        </Grid>
+                    </Grid>
+                </div>
+            </Router>
         );
     }
 }
 
 App.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
 };
 
-export default withStyles(styles)(App);
+const mapStateToProps = state => {
+    const { isAuthenticated } = state.authReducer;
+
+    return {
+        isAuthenticated
+    };
+};
+
+export default connect(mapStateToProps, null)(withStyles(styles)(App));

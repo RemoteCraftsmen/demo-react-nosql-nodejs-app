@@ -70,7 +70,8 @@ class SiteNavigation extends Component {
 }
 
 SiteNavigation.propTypes = {
-    logoutUser: PropTypes.func.isRequired
+    logoutUser: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => {
