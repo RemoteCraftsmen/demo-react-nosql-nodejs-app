@@ -4,14 +4,14 @@
     "description": "React todo backend",
     "main": "index.js",
     "scripts": {
-        "start": "node ./bin/server.js",
-        "dev": "nodemon ./bin/server.js",
+        "start": "node ./src/bin/server.js",
+        "dev": "nodemon ./src/bin/server.js",
         "test": "jest --verbose --runInBand --detectOpenHandles",
         "ci": "jest --verbose --runInBand --no-cache",
         "coverage": "jest --verbose --runInBand --no-cache --coverage",
         "dbsetup": "node ./db-setup.js",
-        "swagger2json": "rm -f swagger.json & ./node_modules/swagger-jsdoc/bin/swagger-jsdoc.js -d swaggerDefinition.js swagger-doc/**/*.yml",
-        "swagger2html": "rm -f ./public/swagger/script.js & scripts/swagger2html/index.js swagger.json ./public/swagger/index.html",
+        "swagger2json": "rm -f swagger.json & ./node_modules/swagger-jsdoc/bin/swagger-jsdoc.js -d swaggerDefinition.js ./src/swagger-doc/**/*.yml",
+        "swagger2html": "rm -f ./src/public/swagger/script.js & ./src/scripts/swagger2html/index.js swagger.json ./src/public/swagger/index.html",
         "generate-swagger": "npm run swagger2json; npm run swagger2html"
     },
     "jest": {},

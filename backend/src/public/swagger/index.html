@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>NOSQL-NODEJS DEMO API</title>
+        <link rel="icon" href="/public/images/favicon.png" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.40.0/swagger-ui.min.css" />
+        <style>
+            html {
+                box-sizing: border-box;
+                overflow: -moz-scrollbars-vertical;
+                overflow-y: scroll;
+            }
+            *,
+            *:before,
+            *:after {
+                box-sizing: inherit;
+            }
+            body {
+                margin: 0;
+                background: #fafafa;
+            }
+            .download-url-wrapper {
+                display: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="swagger-ui"></div>
+        <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.40.0/swagger-ui-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.40.0/swagger-ui-standalone-preset.min.js"></script>
+        <script>
+            window.onload = function () {
+                const spec = {"openapi":"3.0.0","info":{"title":"NOSQL-NODEJS API","version":"1.0.0","description":"API documentation for DEMO-NOSQL-NODEJS App \n\n Get sessionID from cookies by logging into app to make authorized requests"},"servers":[{"url":"http://localhost:8000/api"}],"components":{"securitySchemes":{"cookieAuth":{"type":"apiKey","in":"cookie","name":"SessionID"}},"responses":{"UnauthorizedError":{"description":"User isn't logged in or session has expired"},"ForbiddenError":{"description":"User doesn't have the right permission"},"BadRequestError":{"description":"Bad request","content":{"application/json":{"schema":{"type":"object","properties":{"errors":{"type":"array","items":{"type":"object","allOf":[{"$ref":"#/components/schemas/ValidationError"}]}}}}}}}},"schemas":{"Task":{"type":"object","properties":{"_id":{"type":"string","description":"UUID of each task"},"userId":{"type":"string","description":"UUID of user"},"name":{"type":"string","description":"Name"},"createdAt":{"type":"string","description":"Creation date"}},"xml":{"name":"Task"}},"User":{"type":"object","properties":{"_id":{"type":"string","description":"UUID of each user"},"email":{"type":"string","description":"Email, unique"},"createdAt":{"type":"string","description":"Creation date"}},"xml":{"name":"User"}},"ValidationError":{"type":"object","properties":{"message":{"type":"string","description":"Error content"},"params":{"type":"string","description":"Field name"}},"xml":{"name":"ValidationError"}}}},"paths":{"/auth/login":{"post":{"tags":["Auth"],"description":"Login","requestBody":{"description":"Credentials","required":true,"content":{"application/json":{"schema":{"type":"object","required":["email","password"],"properties":{"email":{"type":"string"},"password":{"type":"string"}}}}}},"responses":{"200":{"description":"Login successful. The session ID is returned in a cookie named `connect.sid`.","content":{"application/json":{"schema":{"type":"object","allOf":[{"$ref":"#/components/schemas/User"}]}}},"headers":{"Set-Cookie":{"schema":{"type":"string","example":"connect.sid=abcde12345; Path=/; HttpOnly"}}}},"400":{"$ref":"#/components/responses/BadRequestError"},"401":{"description":"Wrong credentials"}}}},"/auth/register":{"post":{"tags":["Auth"],"description":"Register","requestBody":{"description":"Credentials","required":true,"content":{"application/json":{"schema":{"type":"object","required":["email","password","passwordConfirmation"],"properties":{"email":{"type":"string"},"password":{"type":"string"},"passwordConfirmation":{"type":"string"}}}}}},"responses":{"200":{"description":"Register successful.","content":{"application/json":{"schema":{"type":"object","allOf":[{"$ref":"#/components/schemas/User"}]}}}},"400":{"$ref":"#/components/responses/BadRequestError"}}}},"/auth/logout":{"post":{"security":[{"cookieAuth":[]}],"tags":["Auth"],"description":"Logout","responses":{"204":{"description":"Logout successful"}}}},"/tasks":{"get":{"security":[{"cookieAuth":[]}],"tags":["Tasks"],"description":"List of Tasks","responses":{"200":{"description":"Successful","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Task"}}}}},"400":{"$ref":"#/components/responses/BadRequestError"},"401":{"$ref":"#/components/responses/UnauthorizedError"}}},"post":{"security":[{"cookieAuth":[]}],"tags":["Tasks"],"description":"Create new task","requestBody":{"description":"New task data","required":true,"content":{"application/json":{"schema":{"type":"object","required":["name"],"properties":{"name":{"type":"string"}}}}}},"responses":{"201":{"description":"Task created","content":{"application/json":{"schema":{"type":"object","allOf":[{"$ref":"#/components/schemas/Task"}]}}}},"400":{"$ref":"#/components/responses/BadRequestError"},"401":{"$ref":"#/components/responses/UnauthorizedError"},"403":{"$ref":"#/components/responses/ForbiddenError"}}}},"/tasks/{id}":{"put":{"security":[{"cookieAuth":[]}],"tags":["Tasks"],"description":"Update specific task","parameters":[{"name":"id","in":"path","description":"UUID of the task","required":true,"schema":{"type":"string"}}],"requestBody":{"description":"Updated data","required":true,"content":{"application/json":{"schema":{"type":"object","required":["id","completed"],"properties":{"id":{"type":"string"},"name":{"type":"string"},"completed":{"type":"string"}}}}}},"responses":{"200":{"description":"Returns updated task","content":{"application/json":{"schema":{"type":"object","allOf":[{"$ref":"#/components/schemas/Task"}]}}}},"400":{"$ref":"#/components/responses/BadRequestError"},"401":{"$ref":"#/components/responses/UnauthorizedError"},"403":{"$ref":"#/components/responses/ForbiddenError"},"404":{"description":"Not Found"}}},"delete":{"security":[{"cookieAuth":[]}],"tags":["Tasks"],"description":"Delete specific task","parameters":[{"name":"id","in":"path","description":"UUID of the task","required":true,"schema":{"type":"string"}}],"responses":{"204":{"description":"Operation successful"},"401":{"$ref":"#/components/responses/UnauthorizedError"},"403":{"$ref":"#/components/responses/ForbiddenError"}}}}},"tags":[]};
+
+                const ui = SwaggerUIBundle({
+                    spec,
+                    dom_id: '#swagger-ui',
+                    deepLinking: true,
+                    presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+                    plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+                    layout: 'StandaloneLayout'
+                });
+
+                window.ui = ui;
+            };
+        </script>
+    </body>
+</html>

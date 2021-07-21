@@ -1,9 +1,9 @@
 const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
-const errorHandler = require('./plugins/errorHandler');
-const di = require('./di');
-const router = require('./routes')(di);
+const errorHandler = require('./src/plugins/errorHandler');
+const di = require('./src/di');
+const router = require('./src/routes')(di);
 
 const app = express();
 
@@ -12,12 +12,12 @@ app.set('di', di);
 app.use(helmet());
 app.use(errorHandler);
 
-require('./plugins/cors')(app);
-require('./plugins/session')(app);
-require('./plugins/bodyParser')(app);
+require('./src/plugins/cors')(app);
+require('./src/plugins/session')(app);
+require('./src/plugins/bodyParser')(app);
 
 app.use('/api', router);
 
-app.use('/doc', express.static(path.join(__dirname, '/public/swagger')));
+app.use('/doc', express.static(path.join(__dirname, './src/public/swagger')));
 
 module.exports = app;
