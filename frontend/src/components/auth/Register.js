@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { registerUser } from '@/store/actions/authActions';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
@@ -23,11 +23,14 @@ const styles = theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '20px'
+        marginBottom: '108px'
     },
     button: {
         marginTop: '25px',
         width: '90px'
+    },
+    link: {
+        marginTop: '30px'
     }
 });
 
@@ -53,17 +56,19 @@ class Register extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const {
+            classes: { form, textField, button, link }
+        } = this.props;
 
         ValidatorForm.addValidationRule('passwordsMustMatch', value => value === this.state.password);
 
         return (
             <div>
-                <ValidatorForm ref="form" className={classes.form} onSubmit={this.doRegister} instantValidate={false}>
+                <ValidatorForm ref="form" className={form} onSubmit={this.doRegister} instantValidate={false}>
                     <Typography variant="display1">Registration</Typography>
 
                     <TextValidator
-                        className={classes.textField}
+                        className={textField}
                         label="Email"
                         value={this.state.email}
                         onChange={this.handleChange('email')}
@@ -72,7 +77,7 @@ class Register extends Component {
                     />
 
                     <TextValidator
-                        className={classes.textField}
+                        className={textField}
                         type="password"
                         label="Password"
                         value={this.state.password}
@@ -82,7 +87,7 @@ class Register extends Component {
                     />
 
                     <TextValidator
-                        className={classes.textField}
+                        className={textField}
                         type="password"
                         label="Confirm password"
                         value={this.state.passwordConfirmation}
@@ -95,11 +100,14 @@ class Register extends Component {
                         variant="contained"
                         color="secondary"
                         onSubmit={this.doRegister}
-                        className={classes.button}
+                        className={button}
                         type="submit"
                     >
                         Register
                     </Button>
+                    <Link className={link} to="/login">
+                        Already registered? Login.
+                    </Link>
                 </ValidatorForm>
             </div>
         );

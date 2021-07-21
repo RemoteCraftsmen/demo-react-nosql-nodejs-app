@@ -31,35 +31,19 @@ class SiteNavigation extends Component {
                     <Toolbar>
                         <Grid container className={classes.grow} spacing={Number(spacing)} justify="center">
                             <Grid item xs={12} sm={10} md={8}>
-                                {this.props.isAuthenticated ? (
-                                    <div style={{ display: 'flex' }}>
-                                        <Button>
-                                            <Link className="navigation-link" to="/tasks">
-                                                Tasks
-                                            </Link>
-                                        </Button>
+                                <div style={{ display: 'flex' }}>
+                                    <Button>
+                                        <Link className="navigation-link" to="/tasks">
+                                            Tasks
+                                        </Link>
+                                    </Button>
 
-                                        <div className={classes.grow}></div>
+                                    <div className={classes.grow}></div>
 
-                                        <Button className="navigation-link" onClick={() => logoutUser(history)}>
-                                            Logout
-                                        </Button>
-                                    </div>
-                                ) : (
-                                    <div style={{ display: 'flex' }}>
-                                        <Button>
-                                            <Link className="navigation-link" to="/login">
-                                                Login
-                                            </Link>
-                                        </Button>
-
-                                        <Button>
-                                            <Link className="navigation-link" to="/register">
-                                                Register
-                                            </Link>
-                                        </Button>
-                                    </div>
-                                )}
+                                    <Button className="navigation-link" onClick={() => logoutUser(history)}>
+                                        Logout
+                                    </Button>
+                                </div>
                             </Grid>
                         </Grid>
                     </Toolbar>
@@ -70,16 +54,7 @@ class SiteNavigation extends Component {
 }
 
 SiteNavigation.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired
+    logoutUser: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
-    const { isAuthenticated } = state.authReducer;
-
-    return {
-        isAuthenticated
-    };
-};
-
-export default connect(mapStateToProps, { logoutUser })(withRouter(withStyles(styles)(SiteNavigation)));
+export default connect(null, { logoutUser })(withRouter(withStyles(styles)(SiteNavigation)));
