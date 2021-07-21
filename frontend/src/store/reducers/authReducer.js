@@ -1,4 +1,4 @@
-import { SET_USER, LOGOUT_USER } from 'store/actions/types';
+import { SET_USER, LOGOUT_USER } from '@/actions/types';
 
 const user = JSON.parse(localStorage.getItem('user')) || null;
 
