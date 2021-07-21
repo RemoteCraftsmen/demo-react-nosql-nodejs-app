@@ -5,6 +5,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import { logoutUser } from '../actions/authActions';
 
 const styles = theme => ({
     grow: {
@@ -21,7 +22,7 @@ class SiteNavigation extends Component {
     };
 
     render() {
-        const { classes = {} } = this.props;
+        const { classes = {}, logoutUser, history } = this.props;
         const { spacing } = this.state;
 
         return (
@@ -40,10 +41,8 @@ class SiteNavigation extends Component {
 
                                         <div className={classes.grow}></div>
 
-                                        <Button>
-                                            <Link className="navigation-link" to="/logout">
-                                                Logout
-                                            </Link>
+                                        <Button className="navigation-link" onClick={() => logoutUser(history)}>
+                                            Logout
                                         </Button>
                                     </div>
                                 ) : (
@@ -71,11 +70,12 @@ class SiteNavigation extends Component {
 }
 
 SiteNavigation.propTypes = {
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    logoutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(withRouter(withStyles(styles)(SiteNavigation)));
+export default connect(mapStateToProps, { logoutUser })(withRouter(withStyles(styles)(SiteNavigation)));

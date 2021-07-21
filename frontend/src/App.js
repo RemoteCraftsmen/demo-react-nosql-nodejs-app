@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import TaskList from './components/TaskList';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Logout from './components/auth/Logout';
 import SiteNavigation from './components/SiteNavigation';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -41,7 +40,6 @@ class App extends Component {
                                 <Route exact path="/" component={Login} />
                                 <Route exact path="/login" component={Login} />
                                 <Route exact path="/register" component={Register} />
-                                <Route exact path="/logout" component={Logout} />
                                 <Route exact path="/tasks" component={TaskList} />
                             </Grid>
                         </Grid>
