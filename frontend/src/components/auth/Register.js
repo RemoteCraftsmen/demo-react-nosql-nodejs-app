@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { registerUser } from '@/store/actions/authActions';
@@ -34,85 +34,77 @@ const styles = theme => ({
     }
 });
 
-class Register extends Component {
-    constructor(props) {
-        super(props);
+const Register = props => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-        this.state = {
-            email: '',
-            password: '',
-            passwordConfirmation: ''
-        };
-    }
+    const formRef = useRef('form');
 
-    doRegister = event => {
-        event.preventDefault();
+    const {
+        classes: { form, textField, button, link },
+        registerUser,
+        history
+    } = props;
 
-        this.props.registerUser(this.state, this.props.history);
+    ValidatorForm.addValidationRule('passwordsMustMatch', value => value === password);
+
+    const handleRegister = e => {
+        e.preventDefault();
+
+        registerUser({ email, password, passwordConfirmation }, history);
     };
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
-    };
+    return (
+        <div>
+            <ValidatorForm ref={formRef} className={form} onSubmit={handleRegister} instantValidate={false}>
+                <Typography variant="display1">Registration</Typography>
 
-    render() {
-        const {
-            classes: { form, textField, button, link }
-        } = this.props;
+                <TextValidator
+                    className={textField}
+                    label="Email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    validators={['required', 'isEmail']}
+                    errorMessages={['Email is required', 'Given email address is not valid']}
+                />
 
-        ValidatorForm.addValidationRule('passwordsMustMatch', value => value === this.state.password);
+                <TextValidator
+                    className={textField}
+                    type="password"
+                    label="Password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    validators={['required']}
+                    errorMessages={['Password is required']}
+                />
 
-        return (
-            <div>
-                <ValidatorForm ref="form" className={form} onSubmit={this.doRegister} instantValidate={false}>
-                    <Typography variant="display1">Registration</Typography>
+                <TextValidator
+                    className={textField}
+                    type="password"
+                    label="Confirm password"
+                    value={passwordConfirmation}
+                    onChange={e => setPasswordConfirmation(e.target.value)}
+                    validators={['required', 'passwordsMustMatch']}
+                    errorMessages={['Password confirmation is required', 'Passwords do not match']}
+                />
 
-                    <TextValidator
-                        className={textField}
-                        label="Email"
-                        value={this.state.email}
-                        onChange={this.handleChange('email')}
-                        validators={['required', 'isEmail']}
-                        errorMessages={['Email is required', 'Given email address is not valid']}
-                    />
-
-                    <TextValidator
-                        className={textField}
-                        type="password"
-                        label="Password"
-                        value={this.state.password}
-                        onChange={this.handleChange('password')}
-                        validators={['required']}
-                        errorMessages={['Password is required']}
-                    />
-
-                    <TextValidator
-                        className={textField}
-                        type="password"
-                        label="Confirm password"
-                        value={this.state.passwordConfirmation}
-                        onChange={this.handleChange('passwordConfirmation')}
-                        validators={['required', 'passwordsMustMatch']}
-                        errorMessages={['Password confirmation is required', 'Passwords do not match']}
-                    />
-
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onSubmit={this.doRegister}
-                        className={button}
-                        type="submit"
-                    >
-                        Register
-                    </Button>
-                    <Link className={link} to="/login">
-                        Already registered? Login.
-                    </Link>
-                </ValidatorForm>
-            </div>
-        );
-    }
-}
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onSubmit={handleRegister}
+                    className={button}
+                    type="submit"
+                >
+                    Register
+                </Button>
+                <Link className={link} to="/login">
+                    Already registered? Login.
+                </Link>
+            </ValidatorForm>
+        </div>
+    );
+};
 
 Register.propTypes = {
     registerUser: PropTypes.func.isRequired
