@@ -1,94 +1,61 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Checkbox, TextField } from '@material-ui/core';
 
-class Task extends Component {
-    constructor(props) {
-        super(props);
+const Task = props => {
+    const { updateTask, deleteTask, id, name, completed } = props;
 
-        this.state = {
-            task: {
-                id: props.id,
-                name: props.name,
-                completed: props.completed
-            }
-        };
-    }
+    const [taskName, setTaskName] = useState(name);
+    const [taskCompleted, setTaskCompleted] = useState(completed);
 
-    handleChange = event => {
-        let { name, type, value, checked } = event.target;
+    const task = { id, name: taskName, completed: taskCompleted };
 
-        const isCheckbox = type === 'checkbox';
+    useEffect(() => {
+        updateTask(task);
+    }, [taskCompleted]);
 
-        if (isCheckbox) {
-            value = checked;
+    const handleChange = event => {
+        let { type, value, checked } = event.target;
+
+        if (type === 'text') {
+            setTaskName(value);
         }
 
-        this.setState(
-            state => {
-                const task = state.task;
-
-                task[name] = value;
-
-                return {
-                    task
-                };
-            },
-            () => {
-                if (isCheckbox) {
-                    this.props.updateTask(this.state.task);
-                }
-            }
-        );
+        if (type === 'checkbox') {
+            setTaskCompleted(checked);
+        }
     };
 
-    render() {
-        const {
-            task: { id, name, completed },
-            task
-        } = this.state;
+    return (
+        <Card className="todo-item">
+            <div className="input-and-checkox">
+                <Checkbox
+                    name="completed"
+                    checked={taskCompleted}
+                    color="secondary"
+                    onChange={handleChange}
+                    style={{ marginRight: 25 }}
+                />
 
-        return (
-            <Card className="todo-item">
-                <div className="input-and-checkox">
-                    <Checkbox
-                        name="completed"
-                        checked={completed}
-                        color="secondary"
-                        onChange={this.handleChange}
-                        style={{ marginRight: 25 }}
-                    />
+                <TextField
+                    name="name"
+                    label="Name"
+                    value={taskName}
+                    onChange={handleChange}
+                    style={{ flexGrow: 1, marginRight: 25 }}
+                />
+            </div>
 
-                    <TextField
-                        name="name"
-                        label="Name"
-                        value={name}
-                        onChange={this.handleChange}
-                        style={{ flexGrow: 1, marginRight: 25 }}
-                    />
-                </div>
+            <div className="crud-buttons">
+                <Button variant="contained" color="primary" className="save-todo-item" onClick={() => updateTask(task)}>
+                    Save
+                </Button>
 
-                <div className="crud-buttons">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        className="save-todo-item"
-                        onClick={() => this.props.updateTask(task)}
-                    >
-                        Save
-                    </Button>
-
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        className="save-todo-item"
-                        onClick={() => this.props.deleteTask(id)}
-                    >
-                        Remove
-                    </Button>
-                </div>
-            </Card>
-        );
-    }
-}
+                <Button variant="contained" color="secondary" className="save-todo-item" onClick={() => deleteTask(id)}>
+                    Remove
+                </Button>
+            </div>
+        </Card>
+    );
+};
 
 export default Task;
