@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AddItem from './AddItem';
+import AddTask from './AddTask';
 import Task from './Task';
 import { Typography } from '@material-ui/core';
 import Notification from './Notification';
@@ -124,7 +124,7 @@ class TaskList extends Component {
                             Tasks
                         </Typography>
 
-                        <AddItem onClick={this.handleAddTask} />
+                        <AddTask handleAddTask={this.handleAddTask} />
 
                         {tasksList.length ? (
                             tasksList
