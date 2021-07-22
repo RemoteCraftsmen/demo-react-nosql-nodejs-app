@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { loginUser } from '@/store/actions/authActions';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
@@ -23,10 +23,13 @@ const styles = theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '20px'
+        marginBottom: '108px'
     },
     button: {
         marginTop: '25px'
+    },
+    link: {
+        marginTop: '30px'
     }
 });
 
@@ -56,15 +59,17 @@ class Login extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const {
+            classes: { form, textField, button, link }
+        } = this.props;
 
         return (
             <div>
-                <ValidatorForm ref="form" className={classes.form} onSubmit={this.doLogin} instantValidate={false}>
+                <ValidatorForm ref="form" className={form} onSubmit={this.doLogin} instantValidate={false}>
                     <Typography variant="display1">Login</Typography>
 
                     <TextValidator
-                        className={classes.textField}
+                        className={textField}
                         label="Email"
                         value={this.state.email}
                         onChange={this.handleChange('email')}
@@ -73,7 +78,7 @@ class Login extends Component {
                     />
 
                     <TextValidator
-                        className={classes.textField}
+                        className={textField}
                         type="password"
                         label="Password"
                         value={this.state.password}
@@ -86,11 +91,14 @@ class Login extends Component {
                         variant="contained"
                         color="secondary"
                         onSubmit={this.doLogin}
-                        className={classes.button}
+                        className={button}
                         type="submit"
                     >
                         Login
                     </Button>
+                    <Link className={link} to="/register">
+                        Don't have account? Register.
+                    </Link>
                 </ValidatorForm>
             </div>
         );
