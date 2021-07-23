@@ -6,11 +6,16 @@ const Task = props => {
 
     const [taskName, setTaskName] = useState(name);
     const [taskCompleted, setTaskCompleted] = useState(completed);
+    const [didMount, setDidMount] = useState(false);
 
     const task = { id, name: taskName, completed: taskCompleted };
 
     useEffect(() => {
-        updateTask(task);
+        if (didMount) {
+            updateTask(task);
+        }
+
+        setDidMount(true);
     }, [taskCompleted]);
 
     const handleChange = event => {

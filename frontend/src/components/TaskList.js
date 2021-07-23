@@ -1,153 +1,120 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddTask from './AddTask';
 import Task from './Task';
 import { Typography } from '@material-ui/core';
 import Notification from './Notification';
-import Unauthorized from './Unauthorized';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchTasks, addTask, updateTask, deleteTask } from '@/store/actions/taskActions';
 
-class TaskList extends Component {
-    constructor(props) {
-        super(props);
+const TaskList = props => {
+    const [notifications, setNotifications] = useState([]);
+    const [isFetching, setIsFetching] = useState(true);
 
-        this.state = {
-            isLoggedIn: true,
-            notifications: [],
-            fetching: true
-        };
-    }
+    const { fetchTasks, tasks, addTask, updateTask, deleteTask } = props;
 
-    componentDidMount = async () => {
+    useEffect(() => {
+        fetchTasks();
+
+        setIsFetching(false);
+    }, []);
+
+    const handleAddTask = async name => {
         try {
-            await this.props.fetchTasks();
+            await addTask(name);
 
-            this.setState({
-                fetching: false
-            });
+            addNotification('Task added');
         } catch (error) {
             console.error(error);
-            this.setState({ isLoggedIn: false });
         }
     };
 
-    handleAddTask = async name => {
+    const handleUpdateTask = async task => {
         try {
-            await this.props.addTask(name);
+            await updateTask(task);
 
-            this.addNotification('Task added', 'info');
+            addNotification('Task updated');
         } catch (error) {
             console.error(error);
-            this.setState({ isLoggedIn: false });
         }
     };
 
-    handleUpdateTask = async task => {
+    const handleDeleteTask = async id => {
         try {
-            await this.props.updateTask(task);
+            await deleteTask(id);
 
-            this.addNotification('Task updated', 'info');
+            addNotification('Task removed', 'error');
         } catch (error) {
             console.error(error);
-            this.setState({ isLoggedIn: false });
         }
     };
 
-    handleDeleteTask = async id => {
-        try {
-            await this.props.deleteTask(id);
+    const addNotification = async (message, variant = 'info', ts = Date.now()) => {
+        const newNotification = { variant, message, ts };
 
-            this.addNotification('Task removed', 'error');
-        } catch (error) {
-            console.error(error);
-            this.setState({ isLoggedIn: false });
-        }
+        setNotifications([...notifications, newNotification]);
     };
 
-    closeNotification = async ts => {
-        this.setState(state => {
-            const notifications = state.notifications.filter(task => task.ts !== ts);
+    const closeNotification = async ts => {
+        const filteredNotifications = notifications.filter(notification => notification.ts !== ts);
 
-            return {
-                notifications
-            };
-        });
+        setNotifications(filteredNotifications);
     };
 
-    addNotification = async (message = '', variant = 'info') => {
-        this.setState(state => {
-            return {
-                notifications: state.notifications.concat({ variant, message, ts: Date.now() })
-            };
-        });
-    };
-
-    render() {
-        const { fetching, notifications, isLoggedIn } = this.state;
-        const { tasks } = this.props;
-
-        const tasksList =
-            !fetching &&
-            tasks.map(task => (
-                <Task
-                    key={task._id}
-                    id={task._id}
-                    name={task.name}
-                    completed={task.completed}
-                    updateTask={this.handleUpdateTask}
-                    deleteTask={this.handleDeleteTask}
-                    addNotification={this.addNotification}
-                />
-            ));
-
-        const notificationsComponents = notifications.map(notification => (
-            <Notification
-                key={notification.ts}
-                variant={notification.variant}
-                message={notification.message}
-                onClose={this.closeNotification}
-                ts={notification.ts}
+    const tasksList =
+        !isFetching &&
+        tasks.map(task => (
+            <Task
+                key={task._id}
+                id={task._id}
+                name={task.name}
+                completed={task.completed}
+                updateTask={handleUpdateTask}
+                deleteTask={handleDeleteTask}
+                addNotification={addNotification}
             />
         ));
 
-        return (
-            <div>
-                {isLoggedIn ? (
-                    <div>
-                        <Typography
-                            component="h1"
-                            variant="h3"
-                            gutterBottom
-                            style={{ textAlign: 'center', marginTop: '50px', marginBottom: '25px' }}
-                        >
-                            Tasks
-                        </Typography>
+    const notificationsComponents = notifications.map(notification => (
+        <Notification
+            key={notification.ts}
+            variant={notification.variant}
+            message={notification.message}
+            onClose={closeNotification}
+            ts={notification.ts}
+        />
+    ));
 
-                        <AddTask handleAddTask={this.handleAddTask} />
+    return (
+        <div>
+            <Typography
+                component="h1"
+                variant="h3"
+                gutterBottom
+                style={{ textAlign: 'center', marginTop: '50px', marginBottom: '25px' }}
+            >
+                Tasks
+            </Typography>
 
-                        {tasksList.length ? (
-                            tasksList
-                        ) : (
-                            <Typography
-                                component="h2"
-                                variant="h4"
-                                gutterBottom
-                                style={{ textAlign: 'center', marginTop: '50px', marginBottom: '25px' }}
-                            >
-                                No tasks <br /> Try adding some
-                            </Typography>
-                        )}
+            <AddTask handleAddTask={handleAddTask} />
 
-                        {notificationsComponents}
-                    </div>
-                ) : (
-                    <Unauthorized />
-                )}
-            </div>
-        );
-    }
-}
+            {tasksList.length ? (
+                tasksList
+            ) : (
+                <Typography
+                    component="h2"
+                    variant="h4"
+                    gutterBottom
+                    style={{ textAlign: 'center', marginTop: '50px', marginBottom: '25px' }}
+                >
+                    No tasks <br /> Try adding some
+                </Typography>
+            )}
+
+            {notificationsComponents}
+        </div>
+    );
+};
 
 TaskList.propTypes = {
     tasks: PropTypes.array.isRequired,
