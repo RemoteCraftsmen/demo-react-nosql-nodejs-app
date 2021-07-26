@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Checkbox, TextField } from '@material-ui/core';
 
-const Task = props => {
-    const { updateTask, deleteTask, id, name, completed } = props;
-
+const Task = ({ updateTask, deleteTask, id, name, completed }) => {
     const [taskName, setTaskName] = useState(name);
     const [taskCompleted, setTaskCompleted] = useState(completed);
     const [didMount, setDidMount] = useState(false);

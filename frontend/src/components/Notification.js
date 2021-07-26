@@ -40,9 +40,7 @@ const styles = theme => ({
     }
 });
 
-const Notification = props => {
-    const { classes, message, onClose, variant, ts, ...other } = props;
-
+const Notification = ({ classes, message, onClose, variant, ts, ...other }) => {
     const handleClose = () => {
         onClose(ts);
     };

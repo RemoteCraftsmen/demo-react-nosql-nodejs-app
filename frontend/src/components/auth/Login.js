@@ -33,17 +33,11 @@ const styles = theme => ({
     }
 });
 
-const Login = props => {
+const Login = ({ classes: { form, textField, button, link }, loginUser, history }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const formRef = useRef('form');
-
-    const {
-        classes: { form, textField, button, link },
-        loginUser,
-        history
-    } = props;
 
     const handleLogin = () => {
         loginUser({ email, password }, history);

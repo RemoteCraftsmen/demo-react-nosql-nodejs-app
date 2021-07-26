@@ -16,9 +16,7 @@ const styles = theme => ({
     }
 });
 
-const SiteNavigation = props => {
-    const { classes = {}, logoutUser, history } = props;
-
+const SiteNavigation = ({ classes = {}, logoutUser, history }) => {
     return (
         <div>
             <AppBar position="static">

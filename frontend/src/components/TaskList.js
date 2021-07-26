@@ -7,11 +7,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchTasks, addTask, updateTask, deleteTask } from '@/store/actions/taskActions';
 
-const TaskList = props => {
+const TaskList = ({ fetchTasks, tasks, addTask, updateTask, deleteTask }) => {
     const [notifications, setNotifications] = useState([]);
     const [isFetching, setIsFetching] = useState(true);
-
-    const { fetchTasks, tasks, addTask, updateTask, deleteTask } = props;
 
     useEffect(() => {
         fetchTasks();

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography } from '@material-ui/core';
 
-const AddItem = props => {
+const AddItem = ({ handleAddTask }) => {
     const [name, setName] = useState('');
-
-    const { handleAddTask } = props;
 
     const handleClick = () => {
         handleAddTask(name);

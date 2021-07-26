@@ -34,18 +34,12 @@ const styles = theme => ({
     }
 });
 
-const Register = props => {
+const Register = ({ classes: { form, textField, button, link }, registerUser, history }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     const formRef = useRef('form');
-
-    const {
-        classes: { form, textField, button, link },
-        registerUser,
-        history
-    } = props;
 
     ValidatorForm.addValidationRule('passwordsMustMatch', value => value === password);
 
