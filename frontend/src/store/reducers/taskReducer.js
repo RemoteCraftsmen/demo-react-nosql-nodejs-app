@@ -1,14 +1,16 @@
 import { SET_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from 'store/actions/types';
 
 const initialState = {
-    tasks: []
+    tasks: [],
+    isFetching: true
 };
 
 const taskReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_TASKS:
             return {
-                tasks: action.tasks
+                tasks: action.tasks,
+                isFetching: false
             };
 
         case ADD_TASK:

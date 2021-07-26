@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import AddTask from './AddTask';
 import Task from './Task';
-import { Typography } from '@material-ui/core';
+import { Typography, CircularProgress } from '@material-ui/core';
 import Notification from './Notification';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchTasks, addTask, updateTask, deleteTask } from '@/store/actions/taskActions';
 
-const TaskList = ({ fetchTasks, tasks, addTask, updateTask, deleteTask }) => {
+const TaskList = ({ fetchTasks, tasks, addTask, updateTask, deleteTask, isFetching }) => {
     const [notifications, setNotifications] = useState([]);
-    const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
         fetchTasks();
-
-        setIsFetching(false);
     }, []);
 
     const handleAddTask = async name => {
@@ -59,19 +56,17 @@ const TaskList = ({ fetchTasks, tasks, addTask, updateTask, deleteTask }) => {
         setNotifications(filteredNotifications);
     };
 
-    const tasksList =
-        !isFetching &&
-        tasks.map(task => (
-            <Task
-                key={task._id}
-                id={task._id}
-                name={task.name}
-                completed={task.completed}
-                updateTask={handleUpdateTask}
-                deleteTask={handleDeleteTask}
-                addNotification={addNotification}
-            />
-        ));
+    const tasksList = tasks.map(task => (
+        <Task
+            key={task._id}
+            id={task._id}
+            name={task.name}
+            completed={task.completed}
+            updateTask={handleUpdateTask}
+            deleteTask={handleDeleteTask}
+            addNotification={addNotification}
+        />
+    ));
 
     const notificationsComponents = notifications.map(notification => (
         <Notification
@@ -96,7 +91,9 @@ const TaskList = ({ fetchTasks, tasks, addTask, updateTask, deleteTask }) => {
 
             <AddTask handleAddTask={handleAddTask} />
 
-            {tasksList.length ? (
+            {isFetching ? (
+                <CircularProgress />
+            ) : tasksList.length ? (
                 tasksList
             ) : (
                 <Typography
@@ -119,14 +116,16 @@ TaskList.propTypes = {
     fetchTasks: PropTypes.func.isRequired,
     addTask: PropTypes.func.isRequired,
     updateTask: PropTypes.func.isRequired,
-    deleteTask: PropTypes.func.isRequired
+    deleteTask: PropTypes.func.isRequired,
+    isFetching: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => {
-    const { tasks } = state.taskReducer;
+    const { tasks, isFetching } = state.taskReducer;
 
     return {
-        tasks
+        tasks,
+        isFetching
     };
 };
 
