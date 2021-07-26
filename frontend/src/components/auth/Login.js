@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { loginUser } from '@/store/actions/authActions';
@@ -33,77 +33,50 @@ const styles = theme => ({
     }
 });
 
-class Login extends Component {
-    constructor(props) {
-        super(props);
+const Login = ({ classes: { form, textField, button, link }, loginUser, history }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-        this.state = {
-            email: '',
-            password: ''
-        };
-    }
+    const formRef = useRef('form');
 
-    doLogin = async () => {
-        const { email, password } = this.state;
-
-        const data = {
-            email,
-            password
-        };
-
-        this.props.loginUser(data, this.props.history);
+    const handleLogin = () => {
+        loginUser({ email, password }, history);
     };
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
-    };
+    return (
+        <div>
+            <ValidatorForm ref={formRef} className={form} onSubmit={handleLogin} instantValidate={false}>
+                <Typography variant="display1">Login</Typography>
 
-    render() {
-        const {
-            classes: { form, textField, button, link }
-        } = this.props;
+                <TextValidator
+                    className={textField}
+                    label="Email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    validators={['required', 'isEmail']}
+                    errorMessages={['Email is required', 'Given email address is not valid']}
+                />
 
-        return (
-            <div>
-                <ValidatorForm ref="form" className={form} onSubmit={this.doLogin} instantValidate={false}>
-                    <Typography variant="display1">Login</Typography>
+                <TextValidator
+                    className={textField}
+                    type="password"
+                    label="Password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    validators={['required']}
+                    errorMessages={['Password is required']}
+                />
 
-                    <TextValidator
-                        className={textField}
-                        label="Email"
-                        value={this.state.email}
-                        onChange={this.handleChange('email')}
-                        validators={['required', 'isEmail']}
-                        errorMessages={['Email is required', 'Given email address is not valid']}
-                    />
-
-                    <TextValidator
-                        className={textField}
-                        type="password"
-                        label="Password"
-                        value={this.state.password}
-                        onChange={this.handleChange('password')}
-                        validators={['required']}
-                        errorMessages={['Password is required']}
-                    />
-
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onSubmit={this.doLogin}
-                        className={button}
-                        type="submit"
-                    >
-                        Login
-                    </Button>
-                    <Link className={link} to="/register">
-                        Don't have account? Register.
-                    </Link>
-                </ValidatorForm>
-            </div>
-        );
-    }
-}
+                <Button variant="contained" color="secondary" onSubmit={handleLogin} className={button} type="submit">
+                    Login
+                </Button>
+                <Link className={link} to="/register">
+                    Don't have account? Register.
+                </Link>
+            </ValidatorForm>
+        </div>
+    );
+};
 
 Login.propTypes = {
     loginUser: PropTypes.func.isRequired

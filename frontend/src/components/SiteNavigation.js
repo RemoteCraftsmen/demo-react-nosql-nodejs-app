@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { AppBar, Toolbar, Button } from '@material-ui/core';
 import { withRouter, Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
@@ -16,42 +16,33 @@ const styles = theme => ({
     }
 });
 
-class SiteNavigation extends Component {
-    state = {
-        spacing: '8'
-    };
+const SiteNavigation = ({ classes = {}, logoutUser, history }) => {
+    return (
+        <div>
+            <AppBar position="static">
+                <Toolbar>
+                    <Grid container className={classes.grow} spacing={8} justify="center">
+                        <Grid item xs={12} sm={10} md={8}>
+                            <div style={{ display: 'flex' }}>
+                                <Button>
+                                    <Link className="navigation-link" to="/tasks">
+                                        Tasks
+                                    </Link>
+                                </Button>
 
-    render() {
-        const { classes = {}, logoutUser, history } = this.props;
-        const { spacing } = this.state;
+                                <div className={classes.grow}></div>
 
-        return (
-            <div>
-                <AppBar position="static">
-                    <Toolbar>
-                        <Grid container className={classes.grow} spacing={Number(spacing)} justify="center">
-                            <Grid item xs={12} sm={10} md={8}>
-                                <div style={{ display: 'flex' }}>
-                                    <Button>
-                                        <Link className="navigation-link" to="/tasks">
-                                            Tasks
-                                        </Link>
-                                    </Button>
-
-                                    <div className={classes.grow}></div>
-
-                                    <Button className="navigation-link" onClick={() => logoutUser(history)}>
-                                        Logout
-                                    </Button>
-                                </div>
-                            </Grid>
+                                <Button className="navigation-link" onClick={() => logoutUser(history)}>
+                                    Logout
+                                </Button>
+                            </div>
                         </Grid>
-                    </Toolbar>
-                </AppBar>
-            </div>
-        );
-    }
-}
+                    </Grid>
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
+};
 
 SiteNavigation.propTypes = {
     logoutUser: PropTypes.func.isRequired

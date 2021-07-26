@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, Grid } from '@material-ui/core';
@@ -34,46 +34,40 @@ const styles = theme => ({
     }
 });
 
-class App extends Component {
-    state = {
-        spacing: '8'
-    };
+const App = props => {
+    const {
+        classes: { root, header, authenticatedContent, noAuthenticatedContent },
+        isAuthenticated
+    } = props;
 
-    render() {
-        const {
-            classes: { root, header, authenticatedContent, noAuthenticatedContent },
-            isAuthenticated
-        } = this.props;
-
-        return (
-            <Router>
-                {isAuthenticated && <SiteNavigation />}
-                <div style={{ padding: 4 }}>
-                    <Grid container className={root} spacing={8} justify="center">
-                        <Grid item xs={12} sm={10} md={8}>
-                            {!isAuthenticated && (
-                                <Typography align="center" variant="h2" className={header}>
-                                    Demo todo app
-                                </Typography>
-                            )}
-                            <div className={isAuthenticated ? authenticatedContent : noAuthenticatedContent}>
-                                <Grid item xs={12} sm={10} md={8}>
-                                    <Switch>
-                                        <Route exact path="/" component={Login} />
-                                        <Route exact path="/login" component={Login} />
-                                        <Route exact path="/register" component={Register} />
-                                        {isAuthenticated && <Route exact path="/tasks" component={TaskList} />}
-                                        <Route component={NotFound} />
-                                    </Switch>
-                                </Grid>
-                            </div>
-                        </Grid>
+    return (
+        <Router>
+            {isAuthenticated && <SiteNavigation />}
+            <div style={{ padding: 4 }}>
+                <Grid container className={root} spacing={8} justify="center">
+                    <Grid item xs={12} sm={10} md={8}>
+                        {!isAuthenticated && (
+                            <Typography align="center" variant="h2" className={header}>
+                                Demo todo app
+                            </Typography>
+                        )}
+                        <div className={isAuthenticated ? authenticatedContent : noAuthenticatedContent}>
+                            <Grid item xs={12} sm={10} md={8}>
+                                <Switch>
+                                    <Route exact path="/" component={Login} />
+                                    <Route exact path="/login" component={Login} />
+                                    <Route exact path="/register" component={Register} />
+                                    {isAuthenticated && <Route exact path="/tasks" component={TaskList} />}
+                                    <Route component={NotFound} />
+                                </Switch>
+                            </Grid>
+                        </div>
                     </Grid>
-                </div>
-            </Router>
-        );
-    }
-}
+                </Grid>
+            </div>
+        </Router>
+    );
+};
 
 App.propTypes = {
     classes: PropTypes.object.isRequired,
