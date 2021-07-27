@@ -1,11 +1,11 @@
 class IndexController {
-    constructor(taskService, httpStatusCodes) {
-        this.taskService = taskService;
+    constructor(taskRepository, httpStatusCodes) {
+        this.taskRepository = taskRepository;
         this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
-        const tasks = await this.taskService.findAll({ userId: req.session.user._id });
+        const tasks = await this.taskRepository.findAll({ userId: req.session.user._id });
 
         return res.send(tasks);
     }

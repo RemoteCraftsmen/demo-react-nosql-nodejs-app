@@ -1,9 +1,9 @@
 const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
-const errorHandler = require('./src/plugins/errorHandler');
-const di = require('./src/di');
-const router = require('./src/routes')(di);
+const errorHandler = require('./plugins/errorHandler');
+const di = require('./di');
+const router = require('./routes')(di);
 
 const app = express();
 
@@ -12,9 +12,9 @@ app.set('di', di);
 app.use(helmet());
 app.use(errorHandler);
 
-require('./src/plugins/cors')(app);
-require('./src/plugins/session')(app);
-require('./src/plugins/bodyParser')(app);
+require('./plugins/cors')(app);
+require('./plugins/session')(app);
+require('./plugins/bodyParser')(app);
 
 app.use('/api', router);
 

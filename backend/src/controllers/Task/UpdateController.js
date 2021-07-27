@@ -1,6 +1,6 @@
 class UpdateController {
-    constructor(taskService, httpStatusCodes) {
-        this.taskService = taskService;
+    constructor(taskRepository, httpStatusCodes) {
+        this.taskRepository = taskRepository;
         this.httpStatusCodes = httpStatusCodes;
     }
 
@@ -8,7 +8,7 @@ class UpdateController {
         const { name, completed } = req.body;
         const { id } = req.params;
 
-        const task = await this.taskService.findById(id);
+        const task = await this.taskRepository.findById(id);
 
         if (!task) {
             return res.sendStatus(this.httpStatusCodes.NOT_FOUND);
@@ -18,13 +18,13 @@ class UpdateController {
             return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
-        await this.taskService.update({
+        await this.taskRepository.update({
             ...task,
             name,
             completed
         });
 
-        const updatedTask = await this.taskService.findById(id);
+        const updatedTask = await this.taskRepository.findById(id);
 
         return res.send(updatedTask);
     }

@@ -1,13 +1,13 @@
 class StoreController {
-    constructor(taskService, httpStatusCodes) {
-        this.taskService = taskService;
+    constructor(taskRepository, httpStatusCodes) {
+        this.taskRepository = taskRepository;
         this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
         const { name } = req.body;
 
-        const task = await this.taskService.create({
+        const task = await this.taskRepository.create({
             name,
             userId: req.session.user._id,
             completed: false,
