@@ -9,7 +9,7 @@
         "test": "jest --verbose --runInBand --detectOpenHandles",
         "ci": "jest --verbose --runInBand --no-cache",
         "coverage": "jest --verbose --runInBand --no-cache --coverage",
-        "dbsetup": "node ./db-setup.js",
+        "dbsetup": "node ./src/scripts/dbSetup.js",
         "swagger2json": "rm -f swagger.json & ./node_modules/swagger-jsdoc/bin/swagger-jsdoc.js -d swaggerDefinition.js ./src/swagger-doc/**/*.yml",
         "swagger2html": "rm -f ./src/public/swagger/script.js & ./src/scripts/swagger2html/index.js swagger.json ./src/public/swagger/index.html",
         "generate-swagger": "npm run swagger2json; npm run swagger2html"
