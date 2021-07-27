@@ -52,7 +52,7 @@ const Register = ({ classes: { form, textField, button, link }, registerUser, hi
     return (
         <div>
             <ValidatorForm ref={formRef} className={form} onSubmit={handleRegister} instantValidate={false}>
-                <Typography variant="display1">Registration</Typography>
+                <Typography variant="h4">Registration</Typography>
 
                 <TextValidator
                     className={textField}

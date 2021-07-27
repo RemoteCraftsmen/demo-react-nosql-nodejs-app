@@ -14,7 +14,7 @@ const Task = ({ updateTask, deleteTask, id, name, completed }) => {
         }
 
         setDidMount(true);
-    }, [taskCompleted]);
+    }, []);
 
     const handleChange = event => {
         let { type, value, checked } = event.target;
