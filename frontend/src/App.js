@@ -16,7 +16,7 @@ const styles = theme => ({
         flexGrow: 1
     },
     control: {
-        padding: theme.spacing.unit * 2
+        padding: theme.spacing(2)
     },
     header: {
         margin: '20px'
@@ -44,7 +44,7 @@ const App = props => {
         <Router>
             {isAuthenticated && <SiteNavigation />}
             <div style={{ padding: 4 }}>
-                <Grid container className={root} spacing={8} justify="center">
+                <Grid container className={root} spacing={8} justifyContent="center">
                     <Grid item xs={12} sm={10} md={8}>
                         {!isAuthenticated && (
                             <Typography align="center" variant="h2" className={header}>
