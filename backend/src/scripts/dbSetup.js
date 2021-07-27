@@ -5,7 +5,7 @@ const {
         port,
         auth: { user, pass }
     }
-} = require('./config');
+} = require('../config');
 
 const url = `${protocol}://${user}:${pass}@${host}:${port}`;
 const nano = require('nano')(url);

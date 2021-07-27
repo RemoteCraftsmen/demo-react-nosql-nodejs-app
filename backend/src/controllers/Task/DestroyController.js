@@ -1,13 +1,13 @@
 class DestroyController {
-    constructor(taskService, httpStatusCodes) {
-        this.taskService = taskService;
+    constructor(taskRepository, httpStatusCodes) {
+        this.taskRepository = taskRepository;
         this.httpStatusCodes = httpStatusCodes;
     }
 
     async invoke(req, res) {
         const { id } = req.params;
 
-        const task = await this.taskService.findById(id);
+        const task = await this.taskRepository.findById(id);
 
         if (!task) {
             return res.sendStatus(this.httpStatusCodes.NO_CONTENT);
@@ -17,7 +17,7 @@ class DestroyController {
             return res.sendStatus(this.httpStatusCodes.FORBIDDEN);
         }
 
-        await this.taskService.destroy(task._id, task._rev);
+        await this.taskRepository.destroy(task._id, task._rev);
 
         return res.sendStatus(this.httpStatusCodes.NO_CONTENT);
     }
