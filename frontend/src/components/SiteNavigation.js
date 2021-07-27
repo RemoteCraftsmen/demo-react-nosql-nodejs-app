@@ -21,7 +21,7 @@ const SiteNavigation = ({ classes = {}, logoutUser, history }) => {
         <div>
             <AppBar position="static">
                 <Toolbar>
-                    <Grid container className={classes.grow} spacing={8} justifyContent="center">
+                    <Grid container className={classes.grow} justifyContent="center">
                         <Grid item xs={12} sm={10} md={8}>
                             <div style={{ display: 'flex' }}>
                                 <Button>
