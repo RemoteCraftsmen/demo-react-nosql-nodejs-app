@@ -15,11 +15,13 @@ const taskReducer = (state = initialState, action) => {
 
         case ADD_TASK:
             return {
+                ...state,
                 tasks: [...state.tasks, action.newTask]
             };
 
         case UPDATE_TASK:
             return {
+                ...state,
                 tasks: state.tasks.map(task => {
                     return task._id !== action.updatedTask._id ? task : action.updatedTask;
                 })
@@ -27,6 +29,7 @@ const taskReducer = (state = initialState, action) => {
 
         case DELETE_TASK:
             return {
+                ...state,
                 tasks: state.tasks.filter(task => task._id !== action.taskId)
             };
 
