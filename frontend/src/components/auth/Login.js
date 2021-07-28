@@ -46,7 +46,7 @@ const Login = ({ classes: { form, textField, button, link }, loginUser, history 
     return (
         <div>
             <ValidatorForm ref={formRef} className={form} onSubmit={handleLogin} instantValidate={false}>
-                <Typography variant="display1">Login</Typography>
+                <Typography variant="h4">Login</Typography>
 
                 <TextValidator
                     className={textField}

@@ -12,7 +12,7 @@ const styles = theme => ({
         flexGrow: 1
     },
     control: {
-        padding: theme.spacing.unit * 2
+        padding: theme.spacing(2)
     }
 });
 
@@ -21,7 +21,7 @@ const SiteNavigation = ({ classes = {}, logoutUser, history }) => {
         <div>
             <AppBar position="static">
                 <Toolbar>
-                    <Grid container className={classes.grow} spacing={8} justify="center">
+                    <Grid container className={classes.grow} justifyContent="center">
                         <Grid item xs={12} sm={10} md={8}>
                             <div style={{ display: 'flex' }}>
                                 <Button>
