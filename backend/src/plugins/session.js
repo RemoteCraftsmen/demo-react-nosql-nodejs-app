@@ -18,7 +18,7 @@ module.exports = app => {
         }
     };
 
-    if (config.app.env === 'production' && config.app.url.startsWith('https')) {
+    if (config.app.env === 'production' && config.app.frontendUrl.startsWith('https')) {
         app.set('trust proxy', 1);
         sessionData.cookie.secure = true;
     }
