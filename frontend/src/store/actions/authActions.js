@@ -6,9 +6,11 @@ export const registerUser = (data, history) => async dispatch => {
     try {
         await axios.post('/auth/register', data);
 
-        const { email, password } = data;
+        const { data: user } = data;
 
-        dispatch(loginUser({ email, password }, history));
+        setUser(user, dispatch);
+
+        history.push('/tasks');
     } catch (error) {
         console.error(error);
     }
