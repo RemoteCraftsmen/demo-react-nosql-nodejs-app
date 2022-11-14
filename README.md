@@ -12,7 +12,7 @@ Basic todo app written in Node.js and React
 
 #### Clone the repository
 
-`git clone git@bitbucket.org:remotecraftsmen/basic-react-app.git`
+`git clone git@github.com:RemoteCraftsmen/demo-react-nosql-nodejs-app.git`
 
 #### Install dependencies
 
@@ -34,7 +34,7 @@ Basic todo app written in Node.js and React
 
 ### Database setup
 
-npm run dbsetup
+`npm run db-setup`
 
 ### DEMO
 
