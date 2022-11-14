@@ -9,6 +9,8 @@ class LoginController {
 
         const user = await this.loginHandler.handle(email, password);
 
+        delete user?.password;
+
         if (!user) {
             return res.sendStatus(this.httpStatusCodes.UNAUTHORIZED);
         }
