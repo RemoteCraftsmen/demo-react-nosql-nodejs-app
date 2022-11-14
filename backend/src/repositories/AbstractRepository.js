@@ -27,9 +27,8 @@ class AbstractRepository {
 
     async create(data) {
         const result = await this.couchDB.insert(this.table, data);
-        const row = await this.findById(result.data.id);
 
-        return row;
+        return await this.findById(result.data.id);
     }
 
     async update(data) {

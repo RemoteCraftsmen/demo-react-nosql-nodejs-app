@@ -6,10 +6,10 @@ class UserRepository extends AbstractRepository {
     }
 
     async findById(id, excludePassword = true) {
-        const { data = {} } = await this.couchDB.get(this.table, id);
+        const { data } = await this.couchDB.get(this.table, id);
 
         if (excludePassword) {
-            delete data.password;
+            data?.password;
         }
 
         return data;
