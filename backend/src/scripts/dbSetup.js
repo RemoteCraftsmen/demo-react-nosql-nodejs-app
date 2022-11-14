@@ -8,6 +8,7 @@ const {
 } = require('../config');
 
 const url = `${protocol}://${user}:${pass}@${host}:${port}`;
+
 const nano = require('nano')(url);
 
 (async () => {

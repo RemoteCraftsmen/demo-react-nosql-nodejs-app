@@ -4,11 +4,11 @@ import { SET_USER, LOGOUT_USER } from './types';
 
 export const registerUser = (data, history) => async dispatch => {
     try {
-        await axios.post('/auth/register', data);
+        const { data: user } = await axios.post('/auth/register', data);
 
-        const { email, password } = data;
+        setUser(user, dispatch);
 
-        dispatch(loginUser({ email, password }, history));
+        history.push('/tasks');
     } catch (error) {
         console.error(error);
     }
@@ -48,5 +48,5 @@ const setUser = (user, dispatch) => {
         user
     });
 
-    localStorage['user'] = JSON.stringify(user);
+    localStorage.setItem('user', JSON.stringify(user));
 };
