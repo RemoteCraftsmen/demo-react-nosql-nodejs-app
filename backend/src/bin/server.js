@@ -16,7 +16,7 @@ async function shutdown(status = 0) {
     try {
         console.info('Shutting down session redis connection ...');
         const redisSessionClient = await di.get('redisSessionClient');
-        await redisSessionClient.quit();
+        await redisSessionClient.disconnect();
     } catch (e) {
         console.error('There was an error during shutting down redis connection!');
     }
