@@ -9,7 +9,7 @@ class UserRepository extends AbstractRepository {
         const { data } = await this.couchDB.get(this.table, id);
 
         if (excludePassword) {
-            data?.password;
+            delete data?.password;
         }
 
         return data;
