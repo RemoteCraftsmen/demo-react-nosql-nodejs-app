@@ -7,7 +7,7 @@ module.exports = {
         {
             name: env('PM2_NAME', 'NodeExpressNoSQL') + 'API',
             namespace: env('PM2_NAME', 'NodeExpressNoSQL'),
-            "script": "./bin/server.js",
+            "script": "./src/bin/server.js",
             "watch": false,
             "env_production": {
                 "NODE_ENV": "production"
