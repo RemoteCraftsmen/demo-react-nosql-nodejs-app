@@ -9,8 +9,6 @@ const {
 
 const url = `${protocol}://${user}:${pass}@${host}:${port}`;
 
-console.log({url});
-
 const nano = require('nano')(url);
 
 (async () => {
