@@ -17,7 +17,7 @@ require('./plugins/bodyParser')(app);
 
 app.use('/api', router);
 
-app.use('/doc', express.static(path.join(__dirname, './src/public/swagger')));
+app.use('/doc', express.static(path.join(__dirname, './public/swagger')));
 
 app.use(errorHandler);
 

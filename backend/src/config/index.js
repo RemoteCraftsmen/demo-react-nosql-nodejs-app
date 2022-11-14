@@ -24,7 +24,7 @@ const config = {
     redisSession: {
         host: env('REDIS_HOST'),
         port: env('REDIS_PORT'),
-        pass: env('REDIS_PASSWORD'),
+        password: env('REDIS_PASSWORD'),
         ttl: env('REDIS_TTL')
     }
 };

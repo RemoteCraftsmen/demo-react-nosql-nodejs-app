@@ -6,9 +6,12 @@ volumes:
 
 services:
     couchdb:
-        image: couchdb:latest
+        image: couchdb:2.3
         container_name: ${COMPOSE_PROJECT_NAME}.couchdb.docker
         restart: unless-stopped
+        environment:
+            - COUCHDB_USER
+            - COUCHDB_PASSWORD
         volumes:
             - couchdb.data:/usr/local/var/lib/couchdb
         ports:
@@ -17,12 +20,12 @@ services:
             - global
 
     redis:
-        image: redis:latest
+        image: redis:5
         container_name: ${COMPOSE_PROJECT_NAME}.redis.docker
         restart: unless-stopped
         volumes:
             - redis.data:/data
-        command: redis-server --requirepass ${REDIS_SESSION_PASS}
+        command: redis-server --requirepass ${REDIS_PASSWORD}
         ports:
             - 127.0.0.1:${REDIS_PORT}:6379
         networks:

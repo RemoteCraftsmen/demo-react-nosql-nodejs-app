@@ -12,6 +12,8 @@ class RegisterController {
 
         const registeredUser = await this.userRepository.findById(user._id);
 
+        delete registeredUser?.password;
+
         req.session.user = registeredUser;
 
         return res.send(registeredUser);
